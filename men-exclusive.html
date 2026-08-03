@@ -1,0 +1,1896 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Men Exclusive — Dress to Impress | Menswear &amp; In-House Tailoring, Johannesburg CBD</title>
+<meta name="description" content="Menswear boutique in the Johannesburg CBD with in-house tailoring. Suits, coats, shirts and accessories, altered to fit on the premises — most alterations in 20 minutes to an hour.">
+<meta name="theme-color" content="#08080A">
+<meta name="color-scheme" content="dark">
+
+<meta property="og:type" content="business.business">
+<meta property="og:site_name" content="Men Exclusive">
+<meta property="og:title" content="Men Exclusive — Dress to Impress">
+<meta property="og:description" content="Menswear with in-house tailoring in the Johannesburg CBD. Fitted while you wait.">
+<meta property="og:locale" content="en_ZA">
+<!-- TODO og:image — 1200x630, one frame from the store video. Absolute URL required;
+     relative paths are ignored by every scraper. Add together with the domain below.
+     <meta property="og:image" content="https://EXAMPLE/assets/hero/og.jpg"> -->
+<!-- TODO og:url + <link rel="canonical"> — deliberately omitted. The listed domain
+     menexclusivesa.co.za is UNVERIFIED and may be parked or dead. Pointing canonical
+     at a domain that does not serve this page is worse than having no canonical at
+     all. Add both the moment the live hostname is confirmed. -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Franklin:wght@200;300;400;500&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+
+<script>document.documentElement.className += " js";</script>
+
+<style>
+/* ══════════════════════════════════════════════════════════════════════════
+   MEN EXCLUSIVE
+   Single file. No build step. No framework. Google Fonts only.
+
+   GOLD DISCIPLINE — gold does three jobs and no others:
+     1. hairline rules   2. letterspaced caps   3. price figures
+   Never a large fill. Never a gradient. Never animated.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+:root{
+  --noir:#08080A;      /* near-pure black, faintly warm */
+  --noir-2:#0E0E11;    /* raised surface */
+  --noir-3:#17171B;    /* borders on dark */
+  --gold:#C6A45C;      /* gold leaf — matches the in-store plaque */
+  --gold-hi:#E7D3A1;
+  --gold-lo:#8A6E33;
+  --ivory:#EDE8DE;     /* body text */
+  --ivory-dim:#8B857A; /* secondary text */
+
+  /* One easing curve everywhere. Expensive things do not hurry. */
+  --silk:cubic-bezier(.16,1,.3,1);
+
+  --sans:"Libre Franklin",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --caps:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:"Libre Caslon Display","Times New Roman",Times,serif;
+
+  --gut:clamp(20px,5vw,64px);   /* page gutter */
+  --band:clamp(72px,11vw,150px);/* vertical rhythm between sections */
+  --hdr:64px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+
+html{-webkit-text-size-adjust:100%}
+
+body{
+  margin:0;
+  background:var(--noir);
+  color:var(--ivory);
+  font-family:var(--sans);
+  font-weight:300;
+  font-size:clamp(15px,1.05vw,16.5px);
+  line-height:1.75;
+  letter-spacing:.005em;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+
+img,video{max-width:100%;display:block}
+
+a{color:inherit}
+
+::selection{background:var(--gold-lo);color:var(--noir)}
+
+:focus-visible{
+  outline:1px solid var(--gold);
+  outline-offset:3px;
+}
+
+.wrap{
+  width:100%;
+  max-width:1240px;
+  margin-inline:auto;
+  padding-inline:var(--gut);
+}
+
+/* Parked ABOVE the viewport, not off to the left — a negative `left` on a
+   wide element widens the scroll area on small screens. */
+.skip{
+  position:fixed;left:12px;top:12px;z-index:200;
+  transform:translateY(-140%);
+  background:var(--noir-2);color:var(--gold);
+  padding:12px 18px;font-family:var(--caps);font-size:11px;
+  letter-spacing:.18em;text-transform:uppercase;text-decoration:none;
+  border:1px solid var(--gold-lo);
+  transition:transform .4s var(--silk);
+}
+.skip:focus{transform:none}
+
+/* ── Type ─────────────────────────────────────────────────────────────── */
+
+h1,h2,h3{
+  font-family:var(--serif);
+  font-weight:400;
+  line-height:1.08;
+  letter-spacing:-.005em;
+  margin:0;
+  text-wrap:balance;
+}
+h1{font-size:clamp(38px,7.4vw,88px)}
+h2{font-size:clamp(30px,4.6vw,58px)}
+h3{font-size:clamp(20px,2.2vw,27px);line-height:1.2}
+
+p{margin:0 0 1.15em}
+p:last-child{margin-bottom:0}
+
+.lede{
+  font-size:clamp(16px,1.5vw,19px);
+  font-weight:200;
+  line-height:1.72;
+  color:#D7D1C6;
+  max-width:56ch;
+}
+
+.dim{color:var(--ivory-dim)}
+
+/* Letterspaced caps — one of gold's three permitted jobs. */
+.eyebrow{
+  font-family:var(--caps);
+  font-weight:600;
+  font-size:clamp(9.5px,.78vw,11px);
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin:0 0 clamp(18px,2vw,26px);
+  display:block;
+}
+.eyebrow .num{color:var(--gold-lo);margin-right:.9em}
+
+.micro{
+  font-family:var(--caps);
+  font-weight:500;
+  font-size:10.5px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--ivory-dim);
+  line-height:1.9;
+}
+
+/* ── The rule ─────────────────────────────────────────────────────────────
+   hairline → open diamond → hairline. Lifted from their own printed
+   notices. Reveals via clip-path so the diamond never distorts.        */
+
+.rule{
+  display:flex;
+  align-items:center;
+  gap:clamp(14px,2vw,24px);
+  width:100%;
+}
+.rule i{
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-lo) 22%,var(--gold-lo) 78%,transparent);
+}
+.rule b{
+  width:8px;height:8px;
+  border:1px solid var(--gold);
+  transform:rotate(45deg);
+  flex:none;
+}
+.rule--short{max-width:190px}
+.rule--center{margin-inline:auto}
+
+html.js .rule{clip-path:inset(0 50% 0 50%);transition:clip-path 1.4s var(--silk) var(--d,0s)}
+html.js .is-in .rule,
+html.js .rule.is-in{clip-path:inset(0 0 0 0)}
+
+/* ── Masked line reveal — the signature effect ────────────────────────────
+   Text rises from behind an overflow-hidden edge, staggered via --d.   */
+
+.line{display:block;overflow:hidden;padding-bottom:.06em}
+html.js .line>span{
+  display:block;
+  transform:translate3d(0,112%,0);
+  transition:transform 1.3s var(--silk) var(--d,0s);
+}
+/* Both forms are required: the observer tags some .line elements directly and
+   reaches others only through an ancestor block. Miss either and the headline
+   stays parked behind its mask forever. */
+html.js .is-in .line>span,
+html.js .line.is-in>span{transform:none}
+
+/* Everything else rises quietly. */
+html.js .rise{
+  opacity:0;
+  transform:translate3d(0,26px,0);
+  transition:opacity 1.15s var(--silk) var(--d,0s),transform 1.15s var(--silk) var(--d,0s);
+}
+html.js .is-in.rise,
+html.js .is-in .rise{opacity:1;transform:none}
+
+/* ── Buttons ──────────────────────────────────────────────────────────── */
+
+.btn{
+  --bg:transparent;
+  display:inline-flex;
+  align-items:center;
+  gap:.85em;
+  font-family:var(--caps);
+  font-weight:600;
+  font-size:11px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  text-decoration:none;
+  color:var(--ivory);
+  background:var(--bg);
+  border:1px solid var(--noir-3);
+  padding:1.22em 1.9em;
+  cursor:pointer;
+  position:relative;
+  transition:border-color .8s var(--silk),color .8s var(--silk),background-color .8s var(--silk);
+}
+.btn:hover,.btn:focus-visible{border-color:var(--gold-lo);color:var(--gold-hi)}
+.btn--gold{border-color:var(--gold-lo);color:var(--gold)}
+.btn--gold:hover,.btn--gold:focus-visible{border-color:var(--gold);color:var(--gold-hi)}
+.btn .arw{width:16px;height:1px;background:currentColor;flex:none;transition:width .8s var(--silk)}
+.btn:hover .arw{width:26px}
+
+/* ── Overture ─────────────────────────────────────────────────────────────
+   Emblem draws, wordmark sets, curtains part. ~2.6s.
+
+   CRITICAL: dismissal is a CSS animation with `forwards`. The overture
+   clears ITSELF whether or not JavaScript ever runs. JS only allows an
+   EARLY exit on click / key / scroll / touch. Never make this JS-dependent. */
+
+.overture{
+  position:fixed;
+  inset:0;
+  z-index:120;
+  display:grid;
+  place-items:center;
+  background:var(--noir);
+  animation:ov-life 2.6s var(--silk) forwards;
+}
+@keyframes ov-life{
+  0%,88%  {opacity:1;visibility:visible;pointer-events:auto}
+  100%    {opacity:0;visibility:hidden;pointer-events:none}
+}
+
+/* Early dismissal — also `forwards`, also pure CSS once the class lands. */
+.overture.is-out{animation:ov-out .62s var(--silk) forwards}
+@keyframes ov-out{
+  to{opacity:0;visibility:hidden;pointer-events:none}
+}
+
+.ov-inner{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  animation:ov-inner 2.6s var(--silk) forwards;
+}
+@keyframes ov-inner{
+  0%,62% {opacity:1;transform:none}
+  100%   {opacity:0;transform:translate3d(0,-14px,0)}
+}
+
+.ov-mark{
+  width:44px;height:44px;
+  margin:0 auto clamp(20px,3vw,30px);
+}
+.ov-mark svg{width:100%;height:100%;overflow:visible}
+.ov-mark rect{
+  fill:none;
+  stroke:var(--gold);
+  stroke-width:1.4;
+  vector-effect:non-scaling-stroke;
+  stroke-dasharray:200;
+  stroke-dashoffset:200;
+  animation:ov-draw 1.5s var(--silk) .1s forwards;
+}
+@keyframes ov-draw{to{stroke-dashoffset:0}}
+
+.ov-word{overflow:hidden;display:block}
+.ov-word span{
+  display:block;
+  animation:ov-set 1.25s var(--silk) .5s both;
+}
+@keyframes ov-set{from{transform:translate3d(0,110%,0)}to{transform:none}}
+
+/* The curtains. Two halves of the same black field, drawn apart. */
+.curtain{
+  position:absolute;
+  top:0;bottom:0;
+  width:50.4%;
+  background:var(--noir);
+  z-index:1;
+}
+.curtain-l{left:0;animation:cur-l 1.5s var(--silk) 1.35s forwards}
+.curtain-r{right:0;animation:cur-r 1.5s var(--silk) 1.35s forwards}
+@keyframes cur-l{to{transform:translate3d(-101%,0,0)}}
+@keyframes cur-r{to{transform:translate3d(101%,0,0)}}
+
+/* ── Header ───────────────────────────────────────────────────────────── */
+
+.hdr{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:90;
+  background:rgba(8,8,10,.72);
+  backdrop-filter:blur(14px) saturate(120%);
+  -webkit-backdrop-filter:blur(14px) saturate(120%);
+  border-bottom:1px solid transparent;
+  transition:background-color .9s var(--silk),border-color .9s var(--silk);
+}
+.hdr.is-stuck{background:rgba(8,8,10,.94);border-bottom-color:var(--noir-3)}
+
+.hdr-in{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  min-height:var(--hdr);
+}
+
+/* Wordmark. On the physical sign the tagline is tracked roughly twice as
+   wide as the wordmark itself — preserved here exactly.               */
+.brand{
+  display:block;
+  text-decoration:none;
+  line-height:1;
+  flex:none;
+}
+.brand b{
+  display:block;
+  font-family:var(--caps);
+  font-weight:700;
+  font-size:clamp(13px,1.35vw,16px);
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  color:var(--ivory);
+}
+.brand i{
+  display:block;
+  font-family:var(--caps);
+  font-weight:500;
+  font-style:normal;
+  font-size:clamp(6.4px,.62vw,7.4px);
+  letter-spacing:.6em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-top:.62em;
+  text-indent:.6em; /* optical: kill the trailing tracking space */
+}
+
+.nav{
+  display:flex;
+  align-items:center;
+  gap:clamp(18px,2.6vw,38px);
+}
+.nav a{
+  font-family:var(--caps);
+  font-weight:500;
+  font-size:10.5px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  text-decoration:none;
+  color:var(--ivory-dim);
+  padding-block:6px;
+  position:relative;
+  transition:color .7s var(--silk);
+}
+.nav a::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:0;
+  height:1px;
+  background:var(--gold-lo);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .8s var(--silk);
+}
+.nav a:hover,.nav a:focus-visible{color:var(--ivory)}
+.nav a:hover::after,.nav a:focus-visible::after{transform:scaleX(1)}
+
+.hdr-cta{
+  font-family:var(--caps);
+  font-weight:600;
+  font-size:10.5px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  text-decoration:none;
+  color:var(--gold);
+  border:1px solid var(--gold-lo);
+  padding:.95em 1.5em;
+  white-space:nowrap;
+  transition:color .7s var(--silk),border-color .7s var(--silk);
+}
+.hdr-cta:hover,.hdr-cta:focus-visible{color:var(--gold-hi);border-color:var(--gold)}
+
+/* Mobile: the four items drop to a single tracked row. No dropdowns, no
+   overlay, no JavaScript — it simply restacks.                         */
+@media (max-width:820px){
+  :root{--hdr:auto}
+  .hdr-in{
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:12px 20px;
+    padding-block:13px;
+  }
+  .brand{order:1}
+  .hdr-cta{order:2;padding:.8em 1.15em;font-size:9.5px}
+  .nav{order:3;width:100%;justify-content:center;gap:clamp(12px,4.2vw,26px)}
+  .nav a{font-size:9.5px;letter-spacing:.15em}
+}
+@media (max-width:360px){
+  .nav a{font-size:9px;letter-spacing:.1em}
+}
+
+/* ── Hero ─────────────────────────────────────────────────────────────── */
+
+.hero{
+  position:relative;
+  min-height:100svh;
+  min-height:100vh;
+  display:flex;
+  align-items:flex-end;
+  padding-top:calc(var(--hdr) + 40px);
+  padding-bottom:clamp(48px,8vh,96px);
+  overflow:hidden;
+  isolation:isolate;
+}
+
+.hero-media{
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  background:var(--noir-2);
+}
+.hero-media img,
+.hero-media video{
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:50% 38%;
+  /* Slow enough never to be consciously noticed. */
+  animation:drift 34s ease-in-out infinite alternate;
+}
+@keyframes drift{
+  from{transform:scale(1.06) translate3d(0,0,0)}
+  to  {transform:scale(1.13) translate3d(-1.6%,-1.4%,0)}
+}
+
+/* The dark field is load-bearing: the stock is rust, lilac, camel, olive
+   and navy, which reads expensive against black and cheap against white. */
+.hero-veil{
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:
+    linear-gradient(180deg,rgba(8,8,10,.86) 0%,rgba(8,8,10,.30) 34%,rgba(8,8,10,.80) 76%,var(--noir) 100%),
+    radial-gradient(120% 78% at 50% 108%,rgba(8,8,10,.92),transparent 62%);
+}
+
+.hero-in{position:relative;width:100%}
+
+.hero h1{max-width:15ch}
+.hero h1 em{
+  font-style:normal;
+  display:block;
+  color:var(--gold);
+  font-size:.3em;
+  font-family:var(--caps);
+  font-weight:600;
+  letter-spacing:.42em;
+  text-transform:uppercase;
+  margin-bottom:clamp(20px,3vw,32px);
+}
+
+.hero-foot{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:clamp(18px,3vw,34px);
+  margin-top:clamp(28px,4vw,44px);
+}
+.hero-note{
+  font-family:var(--caps);
+  font-size:10px;
+  font-weight:500;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--ivory-dim);
+  max-width:30ch;
+  line-height:1.9;
+}
+
+/* ── Creed ────────────────────────────────────────────────────────────── */
+
+.creed{
+  border-block:1px solid var(--noir-3);
+  background:var(--noir-2);
+}
+.creed-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:var(--noir-3);
+  margin-inline:calc(var(--gut) * -1);
+}
+.creed-cell{
+  background:var(--noir-2);
+  padding:clamp(34px,5vw,60px) clamp(20px,3.4vw,46px);
+  text-align:center;
+}
+.creed-fig{
+  font-family:var(--serif);
+  font-size:clamp(30px,4vw,50px);
+  line-height:1;
+  color:var(--ivory);
+  display:block;
+  margin-bottom:.42em;
+}
+.creed-cell p{
+  font-family:var(--caps);
+  font-weight:500;
+  font-size:10px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--ivory-dim);
+  line-height:1.9;
+}
+@media (max-width:760px){
+  .creed-grid{grid-template-columns:1fr}
+}
+
+/* ── Sections ─────────────────────────────────────────────────────────── */
+
+section{position:relative}
+.band{padding-block:var(--band)}
+
+.split{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:clamp(34px,6vw,90px);
+  align-items:center;
+}
+@media (max-width:900px){.split{grid-template-columns:1fr}}
+
+/* ── Image frames ─────────────────────────────────────────────────────────
+   The frame carries the placeholder ground. When a photograph is missing
+   the tile still reads as a considered empty plate rather than a broken
+   image — and the alt text lands on a legible field.                   */
+
+.frame{
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(180deg,var(--noir-2),var(--noir));
+  border:1px solid var(--noir-3);
+}
+.frame::after{
+  content:attr(data-label);
+  position:absolute;
+  inset:auto 0 0 0;
+  padding:0 14px 16px;
+  text-align:center;
+  font-family:var(--caps);
+  font-weight:500;
+  font-size:9px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--gold-lo);
+  pointer-events:none;
+}
+.frame>img{
+  position:relative;
+  z-index:1;
+  width:100%;height:100%;
+  object-fit:cover;
+  color:var(--ivory-dim);
+  font-family:var(--caps);
+  font-size:10px;
+  letter-spacing:.16em;
+}
+/* Ratios here must stay in step with RULES in tools/build-media.py — the
+   script crops to these exactly and prints the matching class name. */
+.frame--portrait{aspect-ratio:3/4}
+.frame--tall{aspect-ratio:2/3}
+.frame--wide{aspect-ratio:4/3}
+.frame--hero{aspect-ratio:16/9}
+.frame--square{aspect-ratio:1/1}
+
+/* An empty plate — used where no photograph exists at all yet. */
+.slot{
+  position:relative;
+  border:1px solid var(--noir-3);
+  background:linear-gradient(180deg,var(--noir-2),var(--noir));
+  display:grid;
+  place-items:center;
+  text-align:center;
+  padding:24px;
+}
+.slot::before{
+  content:"";
+  position:absolute;
+  inset:11px;
+  border:1px solid rgba(138,110,51,.16);
+  pointer-events:none;
+}
+.slot span{
+  font-family:var(--caps);
+  font-weight:500;
+  font-size:9.5px;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  color:var(--gold-lo);
+  line-height:2;
+}
+
+/* ── Collection ───────────────────────────────────────────────────────── */
+
+/* minmax(0,1fr) — a bare 1fr floors at the tile's min-content width, and the
+   price label is nowrap, so the grid refuses to shrink below ~190px a column
+   and pushes the page sideways on a small phone. */
+.cats{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:clamp(10px,1.4vw,18px);
+  margin-top:clamp(34px,4.6vw,58px);
+}
+@media (max-width:900px){.cats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.cat{
+  text-decoration:none;
+  display:block;
+  position:relative;
+  min-width:0;
+}
+.cat .frame{transition:border-color .9s var(--silk)}
+.cat:hover .frame,.cat:focus-visible .frame{border-color:var(--gold-lo)}
+.cat .frame>img{transition:transform 1.5s var(--silk)}
+.cat:hover .frame>img{transform:scale(1.045)}
+.cat-name{
+  display:flex;
+  flex-wrap:wrap;              /* price drops beneath the label on a phone */
+  align-items:baseline;
+  justify-content:space-between;
+  gap:4px 12px;
+  margin-top:14px;
+  font-family:var(--caps);
+  font-weight:600;
+  font-size:10.5px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--ivory);
+}
+.cat-name em{
+  font-style:normal;
+  font-weight:500;
+  color:var(--gold);
+  letter-spacing:.12em;
+  white-space:nowrap;
+}
+
+/* ── Price list — the signature section ──────────────────────────────────
+   Set like a fine-dining menu: gold leader dots, figures in the display
+   face, no photography required. A boutique with no studio catalogue
+   that builds a product grid ends up with empty cards, which reads
+   UNFINISHED rather than exclusive.                                   */
+
+.menu{
+  max-width:800px;
+  margin-inline:auto;
+}
+.menu-set + .menu-set{margin-top:clamp(38px,5vw,60px)}
+
+.menu-head{
+  font-family:var(--caps);
+  font-weight:600;
+  font-size:10px;
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin:0 0 clamp(14px,2vw,20px);
+}
+
+.menu ul{list-style:none;margin:0;padding:0}
+
+.row{
+  display:flex;
+  align-items:baseline;
+  gap:12px;
+  padding-block:clamp(13px,1.5vw,17px);
+  border-top:1px solid var(--noir-3);
+}
+.menu-set ul li:last-child .row{border-bottom:1px solid var(--noir-3)}
+
+.row-name{
+  font-size:clamp(15px,1.35vw,17.5px);
+  font-weight:300;
+  color:var(--ivory);
+  flex:0 1 auto;   /* must be allowed to give way, or the figure is pushed off */
+  min-width:0;
+  max-width:66%;
+}
+.row-name small{
+  display:block;
+  font-family:var(--caps);
+  font-size:9.5px;
+  font-weight:500;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--ivory-dim);
+  margin-top:.5em;
+  line-height:1.8;
+}
+
+/* Gold leader dots. */
+.row-dots{
+  flex:1 1 auto;
+  height:1px;
+  min-width:24px;
+  transform:translateY(-3px);
+  background-image:radial-gradient(circle,var(--gold-lo) .8px,transparent .8px);
+  background-size:6px 1px;
+  background-repeat:repeat-x;
+  background-position:0 50%;
+  opacity:.65;
+}
+
+/* Price figures — the third and last job gold is allowed to do. */
+.row-fig{
+  font-family:var(--serif);
+  font-size:clamp(18px,1.8vw,23px);
+  line-height:1;
+  color:var(--gold);
+  flex:none;
+  white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+}
+/* "Quoted on sight" is far wider than any figure — it wraps rather than
+   shoving itself past the right edge on a small phone. */
+.row-fig.is-quote{
+  font-family:var(--caps);
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--gold-lo);
+  white-space:normal;
+  text-align:right;
+  max-width:11ch;
+  line-height:1.7;
+}
+
+.menu-foot{
+  margin-top:clamp(30px,4vw,46px);
+  padding-top:clamp(22px,3vw,32px);
+  border-top:1px solid var(--noir-3);
+  display:grid;
+  gap:14px;
+}
+
+/* Payment is the single most expensive failure this page can prevent:
+   a customer travelling into the CBD with cash and being turned away. */
+.notice{
+  border:1px solid var(--gold-lo);
+  padding:clamp(18px,2.4vw,26px) clamp(18px,2.6vw,30px);
+  display:grid;
+  gap:8px;
+}
+.notice b{
+  font-family:var(--caps);
+  font-weight:600;
+  font-size:10px;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  color:var(--gold);
+}
+.notice p{
+  font-size:14.5px;
+  font-weight:300;
+  color:var(--ivory);
+  margin:0;
+}
+
+/* ── Occasions ────────────────────────────────────────────────────────── */
+
+.occ{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:clamp(10px,1.4vw,18px);
+  margin-top:clamp(34px,4.6vw,58px);
+}
+@media (max-width:900px){.occ{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.occ{grid-template-columns:1fr}}
+
+.occ .slot{aspect-ratio:3/4}
+.occ-name{
+  margin-top:14px;
+  font-family:var(--caps);
+  font-weight:600;
+  font-size:10.5px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--ivory);
+}
+.occ-name small{
+  display:block;
+  font-family:var(--sans);
+  font-weight:300;
+  font-size:13.5px;
+  letter-spacing:0;
+  text-transform:none;
+  color:var(--ivory-dim);
+  margin-top:.7em;
+  line-height:1.7;
+}
+
+/* ── Process ──────────────────────────────────────────────────────────── */
+
+.steps{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:clamp(24px,4vw,56px);
+  margin-top:clamp(34px,4.6vw,58px);
+}
+@media (max-width:820px){.steps{grid-template-columns:1fr}}
+
+.step{border-top:1px solid var(--noir-3);padding-top:clamp(20px,2.6vw,28px)}
+.step .n{
+  font-family:var(--caps);
+  font-weight:600;
+  font-size:10px;
+  letter-spacing:.28em;
+  color:var(--gold);
+  display:block;
+  margin-bottom:clamp(14px,2vw,20px);
+}
+.step h3{margin-bottom:.6em}
+.step p{font-size:15px;color:var(--ivory-dim);max-width:38ch}
+
+/* ── Complete look ────────────────────────────────────────────────────── */
+
+.looks{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:clamp(16px,2.4vw,30px);
+  margin-top:clamp(34px,4.6vw,58px);
+}
+@media (max-width:900px){.looks{grid-template-columns:1fr;max-width:520px;margin-inline:auto}}
+
+.look{
+  border:1px solid var(--noir-3);
+  background:var(--noir-2);
+  display:flex;
+  flex-direction:column;
+}
+.look .frame{border:0;border-bottom:1px solid var(--noir-3)}
+.look-body{padding:clamp(20px,2.6vw,30px);display:flex;flex-direction:column;flex:1}
+.look h3{font-size:clamp(19px,1.9vw,23px);margin-bottom:1em}
+.look ul{list-style:none;margin:0 0 auto;padding:0;display:grid;gap:.55em}
+.look li{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  font-size:14px;
+  font-weight:300;
+  color:var(--ivory-dim);
+}
+.look li em{font-style:normal;color:#B9B2A6;font-variant-numeric:tabular-nums;white-space:nowrap}
+.look-sum{
+  margin-top:clamp(20px,2.4vw,26px);
+  padding-top:clamp(15px,1.8vw,19px);
+  border-top:1px solid var(--noir-3);
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:14px;
+}
+.look-sum span{
+  font-family:var(--caps);
+  font-weight:600;
+  font-size:9.5px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--ivory-dim);
+}
+.look-sum b{
+  font-family:var(--serif);
+  font-weight:400;
+  font-size:clamp(21px,2.1vw,26px);
+  color:var(--gold);
+  line-height:1;
+  font-variant-numeric:tabular-nums;
+}
+
+/* ── Visit ────────────────────────────────────────────────────────────── */
+
+.visit{background:var(--noir-2);border-block:1px solid var(--noir-3)}
+
+.facts{
+  display:grid;
+  gap:clamp(22px,2.8vw,32px);
+  margin-top:clamp(28px,3.6vw,40px);
+}
+.fact{border-top:1px solid var(--noir-3);padding-top:clamp(15px,1.9vw,20px)}
+.fact dt{
+  font-family:var(--caps);
+  font-weight:600;
+  font-size:9.5px;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:.85em;
+}
+.fact dd{margin:0;font-size:15px;font-weight:300;color:var(--ivory);line-height:1.8}
+.fact dd a{color:var(--ivory);text-decoration:none;border-bottom:1px solid var(--noir-3);transition:border-color .7s var(--silk)}
+.fact dd a:hover,.fact dd a:focus-visible{border-color:var(--gold)}
+.fact dd .sub{display:block;color:var(--ivory-dim);font-size:13.5px;margin-top:.5em}
+
+/* The plaque — gold on black-green marble, as it hangs in the shop. */
+.plaque{
+  border:1px solid var(--gold-lo);
+  padding:clamp(30px,5vw,58px) clamp(22px,4vw,44px);
+  text-align:center;
+  background:
+    radial-gradient(120% 90% at 30% 12%,rgba(30,46,38,.55),transparent 62%),
+    radial-gradient(100% 80% at 78% 88%,rgba(22,34,28,.5),transparent 58%),
+    var(--noir);
+  position:relative;
+}
+.plaque::before{
+  content:"";
+  position:absolute;
+  inset:9px;
+  border:1px solid rgba(198,164,92,.22);
+  pointer-events:none;
+}
+.plaque b{
+  display:block;
+  font-family:var(--caps);
+  font-weight:700;
+  font-size:clamp(14px,1.7vw,19px);
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  color:var(--gold);
+}
+.plaque i{
+  display:block;
+  font-family:var(--caps);
+  font-weight:500;
+  font-style:normal;
+  font-size:clamp(7px,.78vw,8.4px);
+  letter-spacing:.6em;
+  text-transform:uppercase;
+  color:var(--gold-lo);
+  margin-top:1.1em;
+  text-indent:.6em;
+}
+.plaque .rule{margin-block:clamp(20px,3vw,28px)}
+
+/* ── Enquiry ──────────────────────────────────────────────────────────── */
+
+.form{
+  display:grid;
+  gap:clamp(16px,2vw,22px);
+  margin-top:clamp(28px,3.6vw,40px);
+}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2vw,22px)}
+@media (max-width:640px){.pair{grid-template-columns:1fr}}
+
+.field{display:grid;gap:.7em}
+.field label{
+  font-family:var(--caps);
+  font-weight:600;
+  font-size:9.5px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--ivory-dim);
+}
+.field input,
+.field select,
+.field textarea{
+  font-family:var(--sans);
+  font-weight:300;
+  font-size:15px;
+  color:var(--ivory);
+  background:var(--noir);
+  border:1px solid var(--noir-3);
+  padding:.95em 1.05em;
+  width:100%;
+  border-radius:0;
+  transition:border-color .7s var(--silk);
+  -webkit-appearance:none;
+  appearance:none;
+}
+.field select{
+  background-image:linear-gradient(45deg,transparent 50%,var(--gold-lo) 50%),linear-gradient(135deg,var(--gold-lo) 50%,transparent 50%);
+  background-position:calc(100% - 18px) 52%,calc(100% - 13px) 52%;
+  background-size:5px 5px,5px 5px;
+  background-repeat:no-repeat;
+  padding-right:2.6em;
+}
+.field textarea{resize:vertical;min-height:110px;line-height:1.7}
+.field input:focus,.field select:focus,.field textarea:focus{outline:0;border-color:var(--gold-lo)}
+.field input::placeholder,.field textarea::placeholder{color:#4E4B45}
+
+.form-foot{display:flex;flex-wrap:wrap;align-items:center;gap:clamp(16px,2.4vw,28px)}
+.form-note{font-size:12.5px;color:var(--ivory-dim);max-width:44ch;line-height:1.75}
+
+/* ── Footer ───────────────────────────────────────────────────────────── */
+
+.ftr{padding-block:clamp(56px,7vw,88px) clamp(34px,4vw,48px)}
+.ftr-top{
+  display:grid;
+  grid-template-columns:1.2fr 1fr 1fr;
+  gap:clamp(30px,4vw,60px);
+  align-items:start;
+}
+@media (max-width:820px){.ftr-top{grid-template-columns:1fr;gap:34px}}
+
+.ftr h4{
+  font-family:var(--caps);
+  font-weight:600;
+  font-size:9.5px;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin:0 0 1.3em;
+}
+.ftr ul{list-style:none;margin:0;padding:0;display:grid;gap:.75em}
+.ftr a{
+  color:var(--ivory-dim);
+  text-decoration:none;
+  font-size:14px;
+  transition:color .7s var(--silk);
+}
+.ftr a:hover,.ftr a:focus-visible{color:var(--ivory)}
+
+.ftr-base{
+  margin-top:clamp(40px,5vw,64px);
+  padding-top:clamp(20px,2.6vw,28px);
+  border-top:1px solid var(--noir-3);
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px 26px;
+  justify-content:space-between;
+  align-items:center;
+}
+.ftr-base p{margin:0;font-size:11.5px;color:#5C5850;letter-spacing:.04em}
+
+/* ── Reduced motion ───────────────────────────────────────────────────────
+   Every effect on this page is decorative. All of it switches off.     */
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+    scroll-behavior:auto !important;
+  }
+  .overture{display:none}
+  html.js .line>span{transform:none}
+  html.js .rise{opacity:1;transform:none}
+  html.js .rule{clip-path:none}
+  .hero-media img,.hero-media video{animation:none;transform:scale(1.04)}
+}
+</style>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ══ OVERTURE ═══════════════════════════════════════════════════════════
+     Self-clearing. See .overture in the stylesheet — the `forwards` fill
+     means this disappears even if JavaScript never runs.               -->
+<div class="overture" id="overture" role="presentation" aria-hidden="true">
+  <div class="ov-inner">
+
+    <!-- EMBLEM PLACEHOLDER 1 of 3 — overture.
+         When assets/brand/emblem.svg lands, delete the <svg> below and paste:
+         <img src="assets/brand/emblem.svg" alt="" width="44" height="44">
+         Request a SINGLE FLAT PATH SVG: the mark inverts (gold-on-cream on
+         stationery, black-on-gold on the plaque), so one recolourable path
+         beats maintaining two files. -->
+    <div class="ov-mark">
+      <svg viewBox="0 0 44 44" aria-hidden="true" focusable="false">
+        <rect x="7" y="7" width="30" height="30" transform="rotate(45 22 22)"></rect>
+      </svg>
+    </div>
+
+    <span class="ov-word">
+      <span>
+        <b style="display:block;font-family:var(--caps);font-weight:700;font-size:clamp(15px,2.2vw,24px);letter-spacing:.3em;text-transform:uppercase;color:var(--ivory)">Men Exclusive</b>
+        <i style="display:block;font-family:var(--caps);font-weight:500;font-style:normal;font-size:clamp(7px,.9vw,10px);letter-spacing:.6em;text-transform:uppercase;color:var(--gold);margin-top:1.5em;text-indent:.6em">Dress to Impress</i>
+      </span>
+    </span>
+  </div>
+
+  <span class="curtain curtain-l"></span>
+  <span class="curtain curtain-r"></span>
+</div>
+
+<!-- ══ HEADER ════════════════════════════════════════════════════════════ -->
+<header class="hdr" id="hdr">
+  <div class="wrap hdr-in">
+
+    <!-- EMBLEM PLACEHOLDER 2 of 3 — header.
+         Paste to the left of the wordmark inside this <a>:
+         <img src="assets/brand/emblem.svg" alt="" width="26" height="26" style="flex:none"> -->
+    <a class="brand" href="#top" aria-label="Men Exclusive — home">
+      <b>Men Exclusive</b>
+      <i>Dress to Impress</i>
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <a href="#house">The House</a>
+      <a href="#prices">Prices</a>
+      <a href="#occasions">Occasions</a>
+      <a href="#visit">Visit</a>
+    </nav>
+
+    <a class="hdr-cta" href="https://wa.me/27630512118" target="_blank" rel="noopener">WhatsApp</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ══ HERO ════════════════════════════════════════════════════════════ -->
+  <section class="hero" id="top">
+    <div class="hero-media">
+
+      <!-- STORE VIDEO — encode before uploading:
+           MP4/H.264, 1920x1080, 10-16s seamless loop, AUDIO TRACK STRIPPED,
+           under 4 MB. Export WebM/VP9 alongside (~30% smaller on Android).
+           Keep `muted` and `playsinline` or iOS refuses to autoplay.
+           Uncomment this block and DELETE the <img class="shot"> beneath it.
+
+      <video autoplay muted loop playsinline preload="metadata"
+             poster="assets/store/interior.jpg">
+        <source src="assets/hero/store.webm" type="video/webm">
+        <source src="assets/hero/store.mp4"  type="video/mp4">
+      </video>
+      -->
+
+      <img class="shot" src="assets/store/interior.jpg" alt="The Men Exclusive shop floor — suits on the rail beneath gold-framed panelling." onerror="this.style.visibility='hidden'">
+    </div>
+    <div class="hero-veil"></div>
+
+    <div class="wrap hero-in">
+      <h1>
+        <em class="line" style="--d:.05s"><span>Johannesburg CBD</span></em>
+        <span class="line" style="--d:.17s"><span>Bought off the rail.</span></span>
+        <span class="line" style="--d:.29s"><span>Cut to fit you</span></span>
+        <span class="line" style="--d:.41s"><span>before you leave.</span></span>
+      </h1>
+
+      <div class="hero-foot rise" style="--d:.72s">
+        <a class="btn btn--gold" href="https://wa.me/27630512118" target="_blank" rel="noopener">
+          <span>Book a fitting</span><span class="arw" aria-hidden="true"></span>
+        </a>
+        <a class="btn" href="#prices"><span>See the price list</span><span class="arw" aria-hidden="true"></span></a>
+        <p class="hero-note">Suits, coats, shirts and accessories — altered on the premises.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ THE CREED ═══════════════════════════════════════════════════════
+       The 20-minute figure is the strongest claim in the business.
+       Competing operations quote in weeks. It leads.                    -->
+  <section class="creed">
+    <div class="wrap">
+      <div class="creed-grid">
+        <div class="creed-cell rise">
+          <span class="creed-fig">20 minutes</span>
+          <p>Most alterations, done in-house while you wait</p>
+        </div>
+        <div class="creed-cell rise" style="--d:.12s">
+          <span class="creed-fig">Same day</span>
+          <p>Walk-in fittings — no appointment needed</p>
+        </div>
+        <div class="creed-cell rise" style="--d:.24s">
+          <span class="creed-fig">Five days</span>
+          <p>Delivery where your sizes are already on file</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ THE HOUSE ═══════════════════════════════════════════════════════ -->
+  <section class="band" id="house">
+    <div class="wrap split">
+      <div>
+        <span class="eyebrow"><span class="num">I</span>The House</span>
+        <h2>
+          <span class="line"><span>A tailor at the</span></span>
+          <span class="line" style="--d:.12s"><span>back of the shop.</span></span>
+        </h2>
+        <div class="rule rule--short" style="--d:.3s; margin-block:clamp(24px,3vw,34px)" aria-hidden="true"><i></i><b></b><i></i></div>
+        <div class="rise" style="--d:.36s">
+          <p class="lede">Men Exclusive is a menswear shop with a tailor working behind it. You choose from the rail — suits, coats, shirts, ties — and the garment is taken in, let out, shortened or reshaped on the premises before you walk out with it.</p>
+          <p class="lede">Nothing is sent away. That is the whole reason the turnaround is measured in minutes rather than weeks.</p>
+        </div>
+      </div>
+
+      <div class="rise" style="--d:.2s">
+        <div class="frame frame--tall" data-label="Atelier">
+          <img src="assets/store/atelier.jpg" alt="The alterations bench at the back of the shop, where garments are fitted on the premises." loading="lazy" onerror="this.style.visibility='hidden'">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ THE COLLECTION ══════════════════════════════════════════════════
+       Category tiles borrow from assets/looks/ until assets/collection/
+       has its own photography.                                          -->
+  <section class="band" style="padding-top:0">
+    <div class="wrap">
+      <span class="eyebrow"><span class="num">II</span>The Collection</span>
+      <h2 style="max-width:14ch">
+        <span class="line"><span>What hangs</span></span>
+        <span class="line" style="--d:.12s"><span>on the rail.</span></span>
+      </h2>
+
+      <div class="cats">
+        <a class="cat rise" href="https://wa.me/27630512118?text=Good%20day%20Men%20Exclusive.%20I%27d%20like%20to%20see%20what%20suits%20you%20have%20in." target="_blank" rel="noopener">
+          <div class="frame frame--portrait" data-label="Suits">
+            <img src="assets/looks/02-three-piece-navy-check.jpg" alt="A navy checked three-piece suit on a stand." loading="lazy" onerror="this.style.visibility='hidden'">
+          </div>
+          <span class="cat-name">Suits <em>from R2 500</em></span>
+        </a>
+
+        <a class="cat rise" style="--d:.1s" href="https://wa.me/27630512118?text=Good%20day%20Men%20Exclusive.%20I%27d%20like%20to%20see%20what%20coats%20you%20have%20in." target="_blank" rel="noopener">
+          <div class="frame frame--portrait" data-label="Outerwear">
+            <img src="assets/looks/01-overcoat-olive.jpg" alt="An olive overcoat shown full length." loading="lazy" onerror="this.style.visibility='hidden'">
+          </div>
+          <span class="cat-name">Outerwear <em>R1 500</em></span>
+        </a>
+
+        <a class="cat rise" style="--d:.2s" href="https://wa.me/27630512118?text=Good%20day%20Men%20Exclusive.%20I%27d%20like%20to%20see%20what%20shirts%20you%20have%20in." target="_blank" rel="noopener">
+          <div class="frame frame--portrait" data-label="Shirting">
+            <img src="assets/looks/03-blazer-camel.jpg" alt="A camel blazer worn over a shirt." loading="lazy" onerror="this.style.visibility='hidden'">
+          </div>
+          <span class="cat-name">Shirting <em>R450</em></span>
+        </a>
+
+        <a class="cat rise" style="--d:.3s" href="https://wa.me/27630512118?text=Good%20day%20Men%20Exclusive.%20I%27d%20like%20to%20see%20what%20accessories%20you%20have%20in." target="_blank" rel="noopener">
+          <div class="frame frame--portrait" data-label="Accessories">
+            <img src="assets/looks/04-rail-rust.jpg" alt="A rail of rust and tonal garments in the shop." loading="lazy" onerror="this.style.visibility='hidden'">
+          </div>
+          <span class="cat-name">Accessories <em>from R150</em></span>
+        </a>
+      </div>
+
+      <p class="micro rise" style="--d:.4s;margin-top:clamp(24px,3vw,34px)">Stock changes weekly. Message us for what is on the rail today.</p>
+    </div>
+  </section>
+
+  <!-- ══ THE PRICE LIST ══════════════════════════════════════════════════
+       Set like a fine-dining menu. Publishing prices plainly is a
+       confidence signal. DO NOT replace this with a shop grid unless
+       real product photography exists for every SKU.                    -->
+  <section class="band" id="prices" style="background:var(--noir-2);border-block:1px solid var(--noir-3)">
+    <div class="wrap">
+      <div style="text-align:center;margin-bottom:clamp(38px,5vw,62px)">
+        <span class="eyebrow"><span class="num">III</span>The Price List</span>
+        <h2>
+          <span class="line"><span>No appointment.</span></span>
+          <span class="line" style="--d:.12s"><span>No mystery.</span></span>
+        </h2>
+        <div class="rule rule--short rule--center" style="--d:.3s;margin-top:clamp(24px,3vw,32px)" aria-hidden="true"><i></i><b></b><i></i></div>
+      </div>
+
+      <div class="menu">
+
+        <div class="menu-set rise">
+          <h3 class="menu-head">Suiting</h3>
+          <ul>
+            <li><div class="row">
+              <span class="row-name">Double-breasted suit</span>
+              <span class="row-dots" aria-hidden="true"></span>
+              <span class="row-fig">R2 500</span>
+            </div></li>
+
+            <!-- MISSING: single-breasted two-piece. Almost certainly the volume
+                 seller — its absence from a published price list is conspicuous.
+                 Ask the client, then uncomment and fill the figure:
+
+            <li><div class="row">
+              <span class="row-name">Two-piece suit<small>Single-breasted</small></span>
+              <span class="row-dots" aria-hidden="true"></span>
+              <span class="row-fig">R0 000</span>
+            </div></li>
+            -->
+
+            <li><div class="row">
+              <span class="row-name">Three-piece suit</span>
+              <span class="row-dots" aria-hidden="true"></span>
+              <span class="row-fig">R3 000</span>
+            </div></li>
+          </ul>
+        </div>
+
+        <div class="menu-set rise">
+          <h3 class="menu-head">Outerwear</h3>
+          <ul>
+            <li><div class="row">
+              <span class="row-name">Winter coat</span>
+              <span class="row-dots" aria-hidden="true"></span>
+              <span class="row-fig">R1 500</span>
+            </div></li>
+          </ul>
+        </div>
+
+        <div class="menu-set rise">
+          <h3 class="menu-head">Shirting &amp; Accessories</h3>
+          <ul>
+            <li><div class="row">
+              <span class="row-name">Shirt</span>
+              <span class="row-dots" aria-hidden="true"></span>
+              <span class="row-fig">R450</span>
+            </div></li>
+            <li><div class="row">
+              <span class="row-name">Tie</span>
+              <span class="row-dots" aria-hidden="true"></span>
+              <span class="row-fig">R150</span>
+            </div></li>
+          </ul>
+        </div>
+
+        <div class="menu-set rise">
+          <h3 class="menu-head">Tailoring</h3>
+          <ul>
+            <li><div class="row">
+              <span class="row-name">Alterations<small>20 minutes to 1 hour, in-house</small></span>
+              <span class="row-dots" aria-hidden="true"></span>
+              <span class="row-fig is-quote">Quoted on sight</span>
+            </div></li>
+          </ul>
+        </div>
+
+        <div class="menu-foot rise">
+          <p class="micro">All prices in South African Rand.</p>
+
+          <!-- PAYMENT — live and important. A customer travelling into the CBD
+               with cash and being turned away is the most expensive failure
+               this page can prevent. Stated here, in Visit, in the enquiry
+               form, and in paymentAccepted in the JSON-LD.               -->
+          <div class="notice">
+            <b>Card only</b>
+            <p>Visa and Mastercard accepted. Cash is not accepted — this has been our policy since 1 July 2026. Please bring your card.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ OCCASIONS ═══════════════════════════════════════════════════════ -->
+  <section class="band" id="occasions">
+    <div class="wrap">
+      <span class="eyebrow"><span class="num">IV</span>Occasions</span>
+      <h2 style="max-width:16ch">
+        <span class="line"><span>The days you are</span></span>
+        <span class="line" style="--d:.12s"><span>looked at closely.</span></span>
+      </h2>
+
+      <!-- Four .slot placeholders. Needs a groom, a matriculant, a corporate
+           fitting, a winter coat. Reusing the mannequin crops here would
+           read as padding. Shoot: media/occasions/<folder>/, then run
+           tools/build-media.py and swap each .slot for the printed <img>. -->
+      <div class="occ">
+        <div class="rise">
+          <div class="slot"><span>Weddings<br>&amp; Lobola</span></div>
+          <p class="occ-name">Weddings &amp; Lobola<small>Groom, father, brothers — fitted together, in one visit.</small></p>
+        </div>
+        <div class="rise" style="--d:.1s">
+          <div class="slot"><span>Matric<br>Dance</span></div>
+          <p class="occ-name">Matric Dance<small>A first proper suit, altered to actually fit him.</small></p>
+        </div>
+        <div class="rise" style="--d:.2s">
+          <div class="slot"><span>Corporate</span></div>
+          <p class="occ-name">Corporate<small>Interviews, boardrooms, court. Quietly correct.</small></p>
+        </div>
+        <div class="rise" style="--d:.3s">
+          <div class="slot"><span>Winter</span></div>
+          <p class="occ-name">Winter<small>A coat cut close enough to wear over a suit.</small></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ THE PROCESS ═════════════════════════════════════════════════════ -->
+  <section class="band" style="padding-top:0">
+    <div class="wrap">
+      <span class="eyebrow"><span class="num">V</span>The Process</span>
+      <h2 style="max-width:14ch">
+        <span class="line"><span>Three steps,</span></span>
+        <span class="line" style="--d:.12s"><span>one visit.</span></span>
+      </h2>
+
+      <div class="steps">
+        <div class="step rise">
+          <span class="n">01</span>
+          <h3>Choose</h3>
+          <p>Walk in and go through the rail. No appointment, no fitting slot to book. Tell us the occasion and we will pull what suits it.</p>
+        </div>
+        <div class="step rise" style="--d:.12s">
+          <span class="n">02</span>
+          <h3>Fit</h3>
+          <p>The garment is pinned on you and taken to the bench at the back. Most alterations take twenty minutes to an hour.</p>
+        </div>
+        <div class="step rise" style="--d:.24s">
+          <span class="n">03</span>
+          <h3>Wear</h3>
+          <p>You leave dressed. If we already have your sizes on file, we can deliver instead — up to five working days.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ THE COMPLETE LOOK ═══════════════════════════════════════════════
+       Totals are HONEST SUMS of confirmed prices. No bundle discount is
+       applied because none has been agreed with the client. Do not invent
+       one. If a discount is agreed, keep the itemised lines and show the
+       bundle figure beneath the sum.
+
+       Only garments with confirmed prices get a look card. The camel
+       blazer is held back: it is a jacket over separate trousers and no
+       standalone blazer price exists.                                   -->
+  <section class="band" style="padding-top:0">
+    <div class="wrap">
+      <span class="eyebrow"><span class="num">VI</span>The Complete Look</span>
+      <h2 style="max-width:15ch">
+        <span class="line"><span>Dressed from</span></span>
+        <span class="line" style="--d:.12s"><span>collar to cuff.</span></span>
+      </h2>
+      <p class="lede rise" style="--d:.24s;margin-top:clamp(20px,2.6vw,28px)">Each figure below is simply the parts added up — nothing is marked up for being sold together.</p>
+
+      <div class="looks">
+
+        <div class="look rise">
+          <div class="frame frame--wide" data-label="Three-piece">
+            <img src="assets/looks/02-three-piece-navy-check.jpg" alt="A navy checked three-piece suit with shirt and tie." loading="lazy" onerror="this.style.visibility='hidden'">
+          </div>
+          <div class="look-body">
+            <h3>The Boardroom</h3>
+            <ul>
+              <li><span>Three-piece suit</span><em>R3 000</em></li>
+              <li><span>Shirt</span><em>R450</em></li>
+              <li><span>Tie</span><em>R150</em></li>
+            </ul>
+            <div class="look-sum"><span>Complete</span><b>R3 600</b></div>
+          </div>
+        </div>
+
+        <div class="look rise" style="--d:.12s">
+          <div class="frame frame--wide" data-label="Double-breasted">
+            <img src="assets/looks/04-rail-rust.jpg" alt="A double-breasted suit with shirt and tie on the rail." loading="lazy" onerror="this.style.visibility='hidden'">
+          </div>
+          <div class="look-body">
+            <h3>The Occasion</h3>
+            <ul>
+              <li><span>Double-breasted suit</span><em>R2 500</em></li>
+              <li><span>Shirt</span><em>R450</em></li>
+              <li><span>Tie</span><em>R150</em></li>
+            </ul>
+            <div class="look-sum"><span>Complete</span><b>R3 100</b></div>
+          </div>
+        </div>
+
+        <div class="look rise" style="--d:.24s">
+          <div class="frame frame--wide" data-label="Winter">
+            <img src="assets/looks/01-overcoat-olive.jpg" alt="An olive winter coat worn over a suit." loading="lazy" onerror="this.style.visibility='hidden'">
+          </div>
+          <div class="look-body">
+            <h3>The Winter Standard</h3>
+            <ul>
+              <li><span>Winter coat</span><em>R1 500</em></li>
+              <li><span>Three-piece suit</span><em>R3 000</em></li>
+              <li><span>Shirt</span><em>R450</em></li>
+              <li><span>Tie</span><em>R150</em></li>
+            </ul>
+            <div class="look-sum"><span>Complete</span><b>R5 100</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ VISIT ═══════════════════════════════════════════════════════════ -->
+  <section class="band visit" id="visit">
+    <div class="wrap split">
+      <div>
+        <span class="eyebrow"><span class="num">VII</span>Visit</span>
+        <h2 style="max-width:13ch">
+          <span class="line"><span>Come in and</span></span>
+          <span class="line" style="--d:.12s"><span>be measured.</span></span>
+        </h2>
+
+        <dl class="facts">
+
+          <!-- ⚠ ADDRESS IS UNRESOLVED — DO NOT GUESS.
+               Facebook lists:      98 Helen Joseph Street, Johannesburg, 2001
+               A store notice cites: government operations in Small Street
+               These streets intersect in the CBD, so it may be a corner site
+               or the Small Street Mall precinct.
+
+               Whatever goes here must match the Google Business Profile
+               CHARACTER FOR CHARACTER, or the map pin drifts and local
+               ranking suffers. Update BOTH this block and the PostalAddress
+               in the JSON-LD at the foot of this file at the same time. -->
+          <div class="fact rise">
+            <dt>Address</dt>
+            <dd>
+              Johannesburg CBD, Gauteng
+              <span class="sub">Exact street address confirmed on WhatsApp — message us and we will send a pin.</span>
+            </dd>
+          </div>
+
+          <div class="fact rise" style="--d:.08s">
+            <dt>Hours</dt>
+            <!-- ⚠ PLACEHOLDER HOURS — not yet confirmed by the client.
+                 Deliberately kept OUT of the JSON-LD so Google does not
+                 ingest unverified opening times. Confirm, then update here
+                 and add openingHoursSpecification to the JSON-LD. -->
+            <dd>
+              Monday to Friday, 09:00 – 18:00<br>
+              Saturday, 09:00 – 15:00
+              <span class="sub">Message before travelling if you are coming late in the day.</span>
+            </dd>
+          </div>
+
+          <div class="fact rise" style="--d:.16s">
+            <dt>Payment</dt>
+            <dd>
+              Card only — Visa and Mastercard
+              <span class="sub">Cash is not accepted. This has been our policy since 1 July 2026.</span>
+            </dd>
+          </div>
+
+          <div class="fact rise" style="--d:.24s">
+            <dt>Our premises</dt>
+            <dd>
+              We trade from a legally leased shop.
+              <span class="sub">Government operations in the area have not affected our lease or our trading. We are open as usual.</span>
+            </dd>
+          </div>
+
+          <div class="fact rise" style="--d:.32s">
+            <dt>Reach us</dt>
+            <dd>
+              <a href="https://wa.me/27630512118" target="_blank" rel="noopener">+27 63 051 2118</a> — call or WhatsApp<br>
+              <a href="mailto:Atmenexclusive4@gmail.com">Atmenexclusive4@gmail.com</a><br>
+              <a href="https://www.facebook.com/Loza20/" target="_blank" rel="noopener">Facebook</a>
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="rise" style="--d:.2s">
+        <!-- EMBLEM PLACEHOLDER 3 of 3 — the plaque.
+             Paste above the wordmark inside .plaque:
+             <img src="assets/brand/emblem.svg" alt="" width="54" height="54" style="margin:0 auto 26px"> -->
+        <div class="plaque">
+          <b>Men Exclusive</b>
+          <div class="rule" aria-hidden="true"><i></i><b></b><i></i></div>
+          <i>Dress to Impress</i>
+        </div>
+
+        <div class="frame frame--wide" data-label="Signage" style="margin-top:clamp(16px,2.2vw,24px)">
+          <img src="assets/store/signage.jpg" alt="The Men Exclusive shopfront signage." loading="lazy" onerror="this.style.visibility='hidden'">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ ENQUIRY ═════════════════════════════════════════════════════════
+       Composes a WhatsApp message client-side and opens it. No backend,
+       no form service, no database. NO PERSONAL INFORMATION IS EVER
+       STORED, which keeps this site outside POPIA processing obligations
+       entirely. Do not replace with a form that POSTs anywhere without
+       discussing POPIA implications first.                              -->
+  <section class="band" id="enquiry">
+    <div class="wrap" style="max-width:820px">
+      <div style="text-align:center">
+        <span class="eyebrow"><span class="num">VIII</span>Enquiry</span>
+        <h2>
+          <span class="line"><span>Tell us what</span></span>
+          <span class="line" style="--d:.12s"><span>you need.</span></span>
+        </h2>
+        <div class="rule rule--short rule--center" style="--d:.3s;margin-top:clamp(24px,3vw,32px)" aria-hidden="true"><i></i><b></b><i></i></div>
+      </div>
+
+      <form class="form rise" id="enq" novalidate>
+        <div class="pair">
+          <div class="field">
+            <label for="f-name">Your name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Thabo M.">
+          </div>
+          <div class="field">
+            <label for="f-item">What you are after</label>
+            <select id="f-item" name="item">
+              <option>A three-piece suit</option>
+              <option>A double-breasted suit</option>
+              <option>A winter coat</option>
+              <option>Shirts and ties</option>
+              <option>Alterations to something I own</option>
+              <option>A wedding or lobola party</option>
+              <option>A matric dance suit</option>
+              <option>Something else</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pair">
+          <div class="field">
+            <label for="f-when">When you would come in</label>
+            <select id="f-when" name="when">
+              <option>Today</option>
+              <option>This week</option>
+              <option>This weekend</option>
+              <option>Still deciding</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-size">Your usual size <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
+            <input id="f-size" name="size" type="text" placeholder="38, or 'not sure'">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="f-note">Anything else <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
+          <textarea id="f-note" name="note" placeholder="Colour, occasion date, how many of you are coming in."></textarea>
+        </div>
+
+        <div class="form-foot">
+          <button class="btn btn--gold" type="submit">
+            <span>Open in WhatsApp</span><span class="arw" aria-hidden="true"></span>
+          </button>
+          <p class="form-note">This opens WhatsApp with your message ready to send. Nothing is submitted to a server and nothing is stored on this site. Please note we accept card only — Visa and Mastercard.</p>
+        </div>
+      </form>
+
+      <noscript>
+        <p class="form-note" style="margin-top:24px">The form above needs JavaScript. Message us directly on <a href="https://wa.me/27630512118" style="color:var(--gold)">+27 63 051 2118</a> or email <a href="mailto:Atmenexclusive4@gmail.com" style="color:var(--gold)">Atmenexclusive4@gmail.com</a>.</p>
+      </noscript>
+    </div>
+  </section>
+</main>
+
+<!-- ══ FOOTER ══════════════════════════════════════════════════════════ -->
+<footer class="ftr">
+  <div class="wrap">
+    <div class="rule" style="margin-bottom:clamp(40px,5vw,64px)" aria-hidden="true"><i></i><b></b><i></i></div>
+
+    <div class="ftr-top">
+      <div>
+        <a class="brand" href="#top" style="margin-bottom:18px">
+          <b>Men Exclusive</b>
+          <i>Dress to Impress</i>
+        </a>
+        <p class="micro" style="max-width:32ch">Menswear and in-house tailoring.<br>Johannesburg CBD, South Africa.</p>
+      </div>
+
+      <div>
+        <h4>The Shop</h4>
+        <ul>
+          <li><a href="#house">The House</a></li>
+          <li><a href="#prices">Price List</a></li>
+          <li><a href="#occasions">Occasions</a></li>
+          <li><a href="#visit">Visit</a></li>
+          <li><a href="#enquiry">Enquiry</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Reach Us</h4>
+        <ul>
+          <li><a href="https://wa.me/27630512118" target="_blank" rel="noopener">WhatsApp +27 63 051 2118</a></li>
+          <li><a href="tel:+27630512118">Call +27 63 051 2118</a></li>
+          <li><a href="mailto:Atmenexclusive4@gmail.com">Atmenexclusive4@gmail.com</a></li>
+          <li><a href="https://www.facebook.com/Loza20/" target="_blank" rel="noopener">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ftr-base">
+      <p>&copy; <span id="yr">2026</span> Men Exclusive. All rights reserved.</p>
+      <p>Card only — Visa &amp; Mastercard.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ══ STRUCTURED DATA ═════════════════════════════════════════════════════
+     Wired to feed the Google Business Profile. Two fields are deliberately
+     ABSENT and must be added once confirmed:
+
+       1. streetAddress + postalCode — the address is unresolved. Publishing
+          a guess here actively harms the map pin. Add inside PostalAddress.
+       2. openingHoursSpecification — the hours on the page are placeholders.
+          Wrong hours in structured data generate complaints and bad reviews.
+
+     Also add "url" and "image" once the live domain is confirmed.       -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ClothingStore",
+  "name": "Men Exclusive",
+  "slogan": "Dress to Impress",
+  "description": "Menswear boutique in the Johannesburg CBD with in-house tailoring. Suits, coats, shirts and accessories, altered to fit on the premises.",
+  "telephone": "+27630512118",
+  "email": "Atmenexclusive4@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Johannesburg",
+    "addressRegion": "Gauteng",
+    "addressCountry": "ZA"
+  },
+  "areaServed": "Johannesburg",
+  "currenciesAccepted": "ZAR",
+  "paymentAccepted": "Visa, Mastercard. Card only — cash is not accepted.",
+  "priceRange": "R150 – R3 000",
+  "sameAs": ["https://www.facebook.com/Loza20/"],
+  "makesOffer": [
+    { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Double-breasted suit" }, "price": "2500", "priceCurrency": "ZAR" },
+    { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Three-piece suit" }, "price": "3000", "priceCurrency": "ZAR" },
+    { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Winter coat" }, "price": "1500", "priceCurrency": "ZAR" },
+    { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Shirt" }, "price": "450", "priceCurrency": "ZAR" },
+    { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Tie" }, "price": "150", "priceCurrency": "ZAR" }
+  ]
+}
+</script>
+
+<script>
+(function(){
+  "use strict";
+
+  var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ── Overture ──────────────────────────────────────────────────────────
+     The overture already clears itself via CSS `forwards`. This only
+     grants an EARLY exit. If any of it throws, the page still opens.  */
+  var ov = document.getElementById("overture");
+  if (ov) {
+
+    /* BEFORE LAUNCH — gate the overture to once per visit. It is a real
+       conversion tax, and Google measures LCP from page load regardless
+       of what is covering the screen. Uncomment:
+
+    try {
+      if (sessionStorage.getItem("me-overture")) {
+        ov.parentNode.removeChild(ov);
+        ov = null;
+      } else {
+        sessionStorage.setItem("me-overture", "1");
+      }
+    } catch (e) {}
+    */
+
+    if (ov) {
+      var dismiss = function(){
+        if (!ov || ov.classList.contains("is-out")) return;
+        ov.classList.add("is-out");
+        var gone = function(){ if (ov && ov.parentNode) ov.parentNode.removeChild(ov); ov = null; };
+        ov.addEventListener("animationend", gone, { once:true });
+        setTimeout(gone, 900);
+      };
+      ["click","keydown","wheel","touchstart","scroll"].forEach(function(evt){
+        window.addEventListener(evt, dismiss, { once:true, passive:true });
+      });
+      /* Belt and braces: matches the CSS timeline, in case the element
+         lingers with pointer events on a browser that misfires the fill. */
+      setTimeout(dismiss, 2600);
+    }
+  }
+
+  /* ── Reveal on scroll ──────────────────────────────────────────────────
+     Initial hidden states live under `html.js` only, so a JavaScript
+     failure leaves every word on the page visible.                    */
+  var pending = Array.prototype.slice.call(document.querySelectorAll(
+    ".line, .rise, .rule, .creed-cell, .menu-set, .step, .look, .fact, .cat, .occ > div"
+  ));
+
+  var revealAll = function(){
+    pending.forEach(function(el){ el.classList.add("is-in"); });
+    pending.length = 0;
+  };
+
+  if (reduced) {
+    revealAll();
+  } else {
+    /* A deterministic sweep rather than IntersectionObserver.
+       An anchor jump or a flung scroll can carry an element from below the
+       fold to above it between two sampled frames; the observer then never
+       reports it as intersecting and the text stays masked FOREVER. Testing
+       "has this element been reached?" cannot miss, because anything already
+       scrolled past still satisfies it. */
+    var ticking = false;
+
+    var sweep = function(){
+      ticking = false;
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var trigger = vh * 0.92;   /* the old -8% bottom margin */
+      for (var i = pending.length - 1; i >= 0; i--) {
+        if (pending[i].getBoundingClientRect().top < trigger) {
+          pending[i].classList.add("is-in");
+          pending.splice(i, 1);
+        }
+      }
+    };
+
+    var tick = function(){
+      if (ticking || !pending.length) return;
+      ticking = true;
+      (window.requestAnimationFrame || setTimeout)(sweep, 16);
+    };
+
+    window.addEventListener("scroll", tick, { passive:true });
+    window.addEventListener("resize", tick);
+
+    /* Hold the first sweep until the curtains have parted, so the hero plays
+       its reveal to a watching eye instead of behind the overture. */
+    setTimeout(sweep, ov ? 2100 : 60);
+
+    /* Last resort: if anything is somehow still masked well after load,
+       show it. Invisible copy is a far worse failure than a missed animation. */
+    setTimeout(revealAll, 9000);
+  }
+
+  /* ── Header state ──────────────────────────────────────────────────── */
+  var hdr = document.getElementById("hdr");
+  if (hdr) {
+    var onScroll = function(){
+      hdr.classList.toggle("is-stuck", window.pageYOffset > 24);
+    };
+    window.addEventListener("scroll", onScroll, { passive:true });
+    onScroll();
+  }
+
+  /* ── Smooth anchors ────────────────────────────────────────────────── */
+  document.addEventListener("click", function(e){
+    var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if (!a) return;
+    var id = a.getAttribute("href");
+    if (!id || id === "#") return;
+    var t = document.querySelector(id);
+    if (!t) return;
+    e.preventDefault();
+    t.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+    if (history.replaceState) history.replaceState(null, "", id);
+  });
+
+  /* ── Enquiry → WhatsApp ────────────────────────────────────────────────
+     Composed client-side and opened. Nothing is transmitted to this site
+     and nothing is stored.                                            */
+  var form = document.getElementById("enq");
+  if (form) {
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
+
+      var v = function(id){
+        var el = document.getElementById(id);
+        return el && el.value ? el.value.trim() : "";
+      };
+
+      var name = v("f-name");
+      var lines = [];
+
+      lines.push("Good day, Men Exclusive.");
+      lines.push(name ? ("My name is " + name + ".") : "I'd like to enquire.");
+      lines.push("I'm after: " + v("f-item") + ".");
+      lines.push("I could come in: " + v("f-when") + ".");
+
+      var size = v("f-size");
+      if (size) lines.push("My usual size: " + size + ".");
+
+      var note = v("f-note");
+      if (note) lines.push(note);
+
+      var url = "https://wa.me/27630512118?text=" + encodeURIComponent(lines.join("\n"));
+      window.open(url, "_blank", "noopener");
+    });
+  }
+
+  /* ── Footer year ───────────────────────────────────────────────────── */
+  var yr = document.getElementById("yr");
+  if (yr) yr.textContent = new Date().getFullYear();
+
+})();
+</script>
