@@ -592,7 +592,10 @@ section{position:relative}
   color:var(--gold-lo);
   pointer-events:none;
 }
-.frame>img{
+/* Descendant, not child — the images are wrapped in <picture> so the browser
+   can take the WebP, which runs ~30% lighter than the JPEG. */
+.frame picture{display:block;width:100%;height:100%}
+.frame img{
   position:relative;
   z-index:1;
   width:100%;height:100%;
@@ -658,8 +661,8 @@ section{position:relative}
 }
 .cat .frame{transition:border-color .9s var(--silk)}
 .cat:hover .frame,.cat:focus-visible .frame{border-color:var(--gold-lo)}
-.cat .frame>img{transition:transform 1.5s var(--silk)}
-.cat:hover .frame>img{transform:scale(1.045)}
+.cat .frame img{transition:transform 1.5s var(--silk)}
+.cat:hover .frame img{transform:scale(1.045)}
 .cat-name{
   display:flex;
   flex-wrap:wrap;              /* price drops beneath the label on a phone */
@@ -1225,8 +1228,11 @@ section{position:relative}
       </div>
 
       <div class="rise" style="--d:.2s">
-        <div class="frame frame--tall" data-label="Atelier">
-          <img src="assets/store/atelier.jpg" alt="The alterations bench at the back of the shop, where garments are fitted on the premises." loading="lazy" onerror="this.style.visibility='hidden'">
+        <div class="frame frame--portrait" data-label="The Shop Floor">
+          <picture>
+            <source srcset="assets/store/img-20260419-wa0019.webp" type="image/webp">
+            <img src="assets/store/img-20260419-wa0019.jpg" alt="Suits displayed on wooden steps beside shelves of vintage Singer sewing machines and framed prints." loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
         </div>
       </div>
     </div>
@@ -1246,28 +1252,40 @@ section{position:relative}
       <div class="cats">
         <a class="cat rise" href="https://wa.me/27630512118?text=Good%20day%20Men%20Exclusive.%20I%27d%20like%20to%20see%20what%20suits%20you%20have%20in." target="_blank" rel="noopener">
           <div class="frame frame--portrait" data-label="Suits">
-            <img src="assets/looks/02-three-piece-navy-check.jpg" alt="A navy checked three-piece suit on a stand." loading="lazy" onerror="this.style.visibility='hidden'">
+            <picture>
+              <source srcset="assets/looks/img-20260705-wa0018.webp" type="image/webp">
+              <img src="assets/looks/img-20260705-wa0018.jpg" alt="A blue checked three-piece suit on a dress form, trousers folded over the arm, against the shop&#39;s black-green marble." loading="lazy" onerror="this.style.visibility='hidden'">
+            </picture>
           </div>
           <span class="cat-name">Suits <em>from R2 500</em></span>
         </a>
 
         <a class="cat rise" style="--d:.1s" href="https://wa.me/27630512118?text=Good%20day%20Men%20Exclusive.%20I%27d%20like%20to%20see%20what%20coats%20you%20have%20in." target="_blank" rel="noopener">
           <div class="frame frame--portrait" data-label="Outerwear">
-            <img src="assets/looks/01-overcoat-olive.jpg" alt="An olive overcoat shown full length." loading="lazy" onerror="this.style.visibility='hidden'">
+            <picture>
+              <source srcset="assets/looks/img-20260524-wa0026.webp" type="image/webp">
+              <img src="assets/looks/img-20260524-wa0026.jpg" alt="Olive and blush long overcoats on mannequins with gold chrome heads, either side of a navy three-piece suit." loading="lazy" onerror="this.style.visibility='hidden'">
+            </picture>
           </div>
           <span class="cat-name">Outerwear <em>R1 500</em></span>
         </a>
 
         <a class="cat rise" style="--d:.2s" href="https://wa.me/27630512118?text=Good%20day%20Men%20Exclusive.%20I%27d%20like%20to%20see%20what%20shirts%20you%20have%20in." target="_blank" rel="noopener">
           <div class="frame frame--portrait" data-label="Shirting">
-            <img src="assets/looks/03-blazer-camel.jpg" alt="A camel blazer worn over a shirt." loading="lazy" onerror="this.style.visibility='hidden'">
+            <picture>
+              <source srcset="assets/looks/still-vid2-shirt-rails.webp" type="image/webp">
+              <img src="assets/looks/still-vid2-shirt-rails.jpg" alt="Rails of shirts in navy, pink and grey hanging in the shop&#39;s green cabinetry." loading="lazy" onerror="this.style.visibility='hidden'">
+            </picture>
           </div>
           <span class="cat-name">Shirting <em>R450</em></span>
         </a>
 
         <a class="cat rise" style="--d:.3s" href="https://wa.me/27630512118?text=Good%20day%20Men%20Exclusive.%20I%27d%20like%20to%20see%20what%20accessories%20you%20have%20in." target="_blank" rel="noopener">
           <div class="frame frame--portrait" data-label="Accessories">
-            <img src="assets/looks/04-rail-rust.jpg" alt="A rail of rust and tonal garments in the shop." loading="lazy" onerror="this.style.visibility='hidden'">
+            <picture>
+              <source srcset="assets/looks/still-vid2-rope-tie.webp" type="image/webp">
+              <img src="assets/looks/still-vid2-rope-tie.jpg" alt="A cream rope bow tie fastened at the collar of a navy shirt." loading="lazy" onerror="this.style.visibility='hidden'">
+            </picture>
           </div>
           <span class="cat-name">Accessories <em>from R150</em></span>
         </a>
@@ -1460,9 +1478,12 @@ section{position:relative}
       <div class="looks">
 
         <div class="look rise">
-          <div class="frame frame--wide" data-label="Three-piece">
-            <img src="assets/looks/02-three-piece-navy-check.jpg" alt="A navy checked three-piece suit with shirt and tie." loading="lazy" onerror="this.style.visibility='hidden'">
-          </div>
+          <div class="frame frame--portrait" data-label="Three-piece">
+          <picture>
+            <source srcset="assets/looks/img-20260719-wa0025.webp" type="image/webp">
+            <img src="assets/looks/img-20260719-wa0025.jpg" alt="A charcoal three-piece suit with a white shirt and a red tie, on a dress form." loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </div>
           <div class="look-body">
             <h3>The Boardroom</h3>
             <ul>
@@ -1475,9 +1496,12 @@ section{position:relative}
         </div>
 
         <div class="look rise" style="--d:.12s">
-          <div class="frame frame--wide" data-label="Double-breasted">
-            <img src="assets/looks/04-rail-rust.jpg" alt="A double-breasted suit with shirt and tie on the rail." loading="lazy" onerror="this.style.visibility='hidden'">
-          </div>
+          <div class="frame frame--portrait" data-label="Double-breasted">
+          <picture>
+            <source srcset="assets/looks/img-20260614-wa0018.webp" type="image/webp">
+            <img src="assets/looks/img-20260614-wa0018.jpg" alt="A rust double-breasted suit on a dress form, trousers folded over the arm." loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </div>
           <div class="look-body">
             <h3>The Occasion</h3>
             <ul>
@@ -1490,9 +1514,12 @@ section{position:relative}
         </div>
 
         <div class="look rise" style="--d:.24s">
-          <div class="frame frame--wide" data-label="Winter">
-            <img src="assets/looks/01-overcoat-olive.jpg" alt="An olive winter coat worn over a suit." loading="lazy" onerror="this.style.visibility='hidden'">
-          </div>
+          <div class="frame frame--portrait" data-label="Winter">
+          <picture>
+            <source srcset="assets/looks/img-20260524-wa0040.webp" type="image/webp">
+            <img src="assets/looks/img-20260524-wa0040.jpg" alt="An olive overcoat worn over a suit, beside a charcoal overcoat and a navy three-piece." loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </div>
           <div class="look-body">
             <h3>The Winter Standard</h3>
             <ul>
@@ -1588,8 +1615,11 @@ section{position:relative}
           <i>Dress to Impress</i>
         </div>
 
-        <div class="frame frame--wide" data-label="Signage" style="margin-top:clamp(16px,2.2vw,24px)">
-          <img src="assets/store/signage.jpg" alt="The Men Exclusive shopfront signage." loading="lazy" onerror="this.style.visibility='hidden'">
+        <div class="frame frame--portrait" data-label="Inside the Shop">
+          <picture>
+            <source srcset="assets/store/img-20260419-wa0013.webp" type="image/webp">
+            <img src="assets/store/img-20260419-wa0013.jpg" alt="Mannequins in camel, teal, mustard and purple pinstripe suits on the shop&#39;s wooden steps, against exposed brick and black-green marble." loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
         </div>
       </div>
     </div>

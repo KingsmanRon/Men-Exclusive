@@ -65,7 +65,11 @@ WEBP_QUALITY = 80
 # ─────────────────────────────────────────────────────────────────────────────
 
 RULES = {
-    "store/interior":            {"out": "store",      "ratio": (16, 9), "focus": 0.45, "width": 1920},
+    # 3:4, not 16:9. The hero poster now comes from the store video, so
+    # interior stills are used in upright content frames instead — and every
+    # photograph the client shoots is a portrait phone frame. A 16:9 rule
+    # here would throw away two thirds of each one.
+    "store/interior":            {"out": "store",      "ratio": (3, 4),  "focus": 0.42, "width": 1200},
     "store/shopfront":           {"out": "store",      "ratio": (4, 3),  "focus": 0.42, "width": 1600},
     "store/atelier":             {"out": "store",      "ratio": (2, 3),  "focus": 0.40, "width": 1200},
     "store/signage":             {"out": "store",      "ratio": (4, 3),  "focus": 0.44, "width": 1600},

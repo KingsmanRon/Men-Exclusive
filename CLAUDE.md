@@ -201,7 +201,7 @@ assets/                     GENERATED — never edit by hand
   store/      interior.jpg  signage.jpg  atelier.jpg
   looks/      01-overcoat-olive.jpg  02-three-piece-navy-check.jpg
               03-blazer-camel.jpg    04-rail-rust.jpg
-  collection/ (empty — category tiles borrow from looks/ for now)
+  collection/ (empty — category tiles borrow from looks/)
   occasions/  (empty — needs occasion photography)
   hero/       store.mp4  store.webm  poster.jpg  og.jpg
   brand/      blackandgold.png  blackandgold.webp  blackandgold-64.png
@@ -213,12 +213,22 @@ out to a real alpha channel, trim to the mark, write PNG + WebP + a 64px
 favicon, and print a bare `<img>` rather than a `.frame`. Photographs are
 never keyed — only entries flagged `alpha`.
 
-**No photography has been supplied yet.** Every `assets/` folder is currently
-empty. The HTML already references the filenames above so the page completes
-itself the moment they land; until then each `<img>` carries
-`onerror="this.style.visibility='hidden'"` and sits inside a `.frame`, so a
-missing photograph reads as a considered empty plate rather than a broken
-image icon. Nothing needs rewiring when the real files arrive.
+**Photography is now partly supplied** — 23 client photographs plus two
+stills pulled from the store video. Everything the client shoots is a
+**portrait 3:4 phone frame**, so `store/interior` was re-ruled from 16:9 to
+3:4 (the hero poster now comes from the video, so interior stills are used in
+upright content frames instead), and the House / Complete Look / Visit frames
+were switched to `.frame--portrait` to match. Nothing is cropped destructively.
+
+Images are served through `<picture>` with a WebP source and a JPEG
+fallback — about 30% lighter. Each still carries
+`onerror="this.style.visibility='hidden'"` inside a `.frame`, so anything
+missing reads as a considered empty plate rather than a broken image icon.
+
+**Filenames are still the raw WhatsApp ones** (`img-20260705-wa0018.jpg`).
+That was accepted deliberately to get a client demo up. Renaming the SOURCES
+in `media/` to descriptive names regenerates everything with sensible asset
+names — do that before launch, and re-point the `<picture>` blocks.
 
 **Adding photographs:** drop originals in the matching `media/` folder, run
 `python3 tools/build-media.py`. It applies EXIF rotation, strips GPS and
@@ -328,8 +338,16 @@ implications first.
       looks genuinely good there, but the desktop hero scales it ~3× and it
       goes soft. The veil covers for it. **This is the single biggest visual
       upgrade available to the page.** `VID1.mp4` is still unused.
-- [ ] **Any photography at all.** `assets/` is empty. The four store and looks
-      filenames referenced in the HTML are the ones the page expects.
+- [x] **Photography — 23 client shots supplied and live.** 16 three-piece and
+      5 double-breasted on the dress form against the black-green marble,
+      2 winter-coat mannequin groups, 2 interiors. Categorisation was checked
+      garment by garment: every file in `suits/three-piece/` really does show
+      a waistcoat.
+- [ ] **Shirts and accessories are video stills, not photographs.**
+      `still-vid2-shirt-rails` and `still-vid2-rope-tie` are frames lifted
+      from VID2 to fill the Shirting and Accessories tiles for the demo. They
+      are only 478px wide and visibly softer than the real photographs beside
+      them. Replace with proper shots.
 
 ### Content gaps
 
@@ -339,9 +357,10 @@ implications first.
       not ingest unverified opening times; add
       `openingHoursSpecification` once confirmed.
 - [ ] Resolve the address — HTML Visit panel **and** JSON-LD `PostalAddress`
-- [ ] Occasion photography — 4 remaining `.slot` placeholders. Needs a groom,
-      a matriculant, a corporate fitting, a winter coat. Reusing the mannequin
-      crops here would read as padding.
+- [ ] Occasion photography — 4 remaining `.slot` placeholders, still the only
+      empty section on the page. Needs a groom, a matriculant, a corporate
+      fitting, a winter coat. Reusing the dress-form crops here would read as
+      padding, which is why they were left empty even for the client demo.
 - [ ] Shopfront **exterior** with the street number legible
 - [x] `og:image` — cut and ready at `assets/hero/og.jpg` (1200×630). The
       meta tag stays commented until the domain is confirmed: og:image needs

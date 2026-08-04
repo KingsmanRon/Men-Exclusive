@@ -12,5 +12,329 @@
     "src": "brand/blackandgold.png",
     "w": 512,
     "webp": "assets/brand/blackandgold.webp"
+  },
+  "outerwear/winter-coats/IMG-20260524-WA0026.jpg": {
+    "h": 1600,
+    "jpg": "assets/looks/img-20260524-wa0026.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "d41fb9aa93f70f5e6b7255e7194b0e77c7165e7e",
+    "src": "outerwear/winter-coats/IMG-20260524-WA0026.jpg",
+    "w": 1200,
+    "webp": "assets/looks/img-20260524-wa0026.webp"
+  },
+  "outerwear/winter-coats/IMG-20260524-WA0040.jpg": {
+    "h": 1600,
+    "jpg": "assets/looks/img-20260524-wa0040.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "0cc9c6b07fdd5ca0d35d7eabf175a0b6e785a7e1",
+    "src": "outerwear/winter-coats/IMG-20260524-WA0040.jpg",
+    "w": 1200,
+    "webp": "assets/looks/img-20260524-wa0040.webp"
+  },
+  "shirting/accessories/still-vid2-rope-tie.jpg": {
+    "h": 637,
+    "jpg": "assets/looks/still-vid2-rope-tie.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "2263ccf903c1378e0b1bb95c8b3b489997b27f85",
+    "src": "shirting/accessories/still-vid2-rope-tie.jpg",
+    "w": 478,
+    "webp": "assets/looks/still-vid2-rope-tie.webp"
+  },
+  "shirting/shirts/still-vid2-shirt-rails.jpg": {
+    "h": 637,
+    "jpg": "assets/looks/still-vid2-shirt-rails.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "4e6d5c305d9e414fb2bdda55fb50d49e1c138060",
+    "src": "shirting/shirts/still-vid2-shirt-rails.jpg",
+    "w": 478,
+    "webp": "assets/looks/still-vid2-shirt-rails.webp"
+  },
+  "store/interior/IMG-20260419-WA0013.jpg": {
+    "h": 1600,
+    "jpg": "assets/store/img-20260419-wa0013.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "6c05330de17df500ed8f3dd31d7be4eb2b3f2a23",
+    "src": "store/interior/IMG-20260419-WA0013.jpg",
+    "w": 1200,
+    "webp": "assets/store/img-20260419-wa0013.webp"
+  },
+  "store/interior/IMG-20260419-WA0019.jpg": {
+    "h": 1600,
+    "jpg": "assets/store/img-20260419-wa0019.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "14283e381e3c3f8e249343bba8bc386383d78499",
+    "src": "store/interior/IMG-20260419-WA0019.jpg",
+    "w": 1200,
+    "webp": "assets/store/img-20260419-wa0019.webp"
+  },
+  "suits/double-breasted/IMG-20260614-WA0018.jpg": {
+    "h": 1204,
+    "jpg": "assets/looks/img-20260614-wa0018.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "10dcce1dbd106c037719e0198a4cb0bb63ed9e10",
+    "src": "suits/double-breasted/IMG-20260614-WA0018.jpg",
+    "w": 903,
+    "webp": "assets/looks/img-20260614-wa0018.webp"
+  },
+  "suits/double-breasted/IMG-20260614-WA0020.jpg": {
+    "h": 1280,
+    "jpg": "assets/looks/img-20260614-wa0020.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "78e1022f4b77f2860a811aa4911234efff1e1620",
+    "src": "suits/double-breasted/IMG-20260614-WA0020.jpg",
+    "w": 960,
+    "webp": "assets/looks/img-20260614-wa0020.webp"
+  },
+  "suits/double-breasted/IMG-20260614-WA0021.jpg": {
+    "h": 1280,
+    "jpg": "assets/looks/img-20260614-wa0021.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "dc2e9ddb61bf00a5ff54ea57518820bb20a873d6",
+    "src": "suits/double-breasted/IMG-20260614-WA0021.jpg",
+    "w": 960,
+    "webp": "assets/looks/img-20260614-wa0021.webp"
+  },
+  "suits/double-breasted/IMG-20260614-WA0022.jpg": {
+    "h": 1228,
+    "jpg": "assets/looks/img-20260614-wa0022.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "d1e7142709319597b812381c882e87944dde06e7",
+    "src": "suits/double-breasted/IMG-20260614-WA0022.jpg",
+    "w": 921,
+    "webp": "assets/looks/img-20260614-wa0022.webp"
+  },
+  "suits/double-breasted/IMG-20260614-WA0023.jpg": {
+    "h": 1280,
+    "jpg": "assets/looks/img-20260614-wa0023.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "ce172d710c1a95f58cf1bff5bc5821cc0ce66eec",
+    "src": "suits/double-breasted/IMG-20260614-WA0023.jpg",
+    "w": 960,
+    "webp": "assets/looks/img-20260614-wa0023.webp"
+  },
+  "suits/three-piece/IMG-20260628-WA0004.jpg": {
+    "h": 1600,
+    "jpg": "assets/looks/img-20260628-wa0004.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "b99edfada255d93f9af1575c084f7896b1367716",
+    "src": "suits/three-piece/IMG-20260628-WA0004.jpg",
+    "w": 1200,
+    "webp": "assets/looks/img-20260628-wa0004.webp"
+  },
+  "suits/three-piece/IMG-20260628-WA0005.jpg": {
+    "h": 1600,
+    "jpg": "assets/looks/img-20260628-wa0005.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "d83aa075c20e5a2e65bb082b31c0131fca51a828",
+    "src": "suits/three-piece/IMG-20260628-WA0005.jpg",
+    "w": 1200,
+    "webp": "assets/looks/img-20260628-wa0005.webp"
+  },
+  "suits/three-piece/IMG-20260628-WA0007.jpg": {
+    "h": 1600,
+    "jpg": "assets/looks/img-20260628-wa0007.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "7e10664893a2afdd28bffb73cf1e0e77fc8ef033",
+    "src": "suits/three-piece/IMG-20260628-WA0007.jpg",
+    "w": 1200,
+    "webp": "assets/looks/img-20260628-wa0007.webp"
+  },
+  "suits/three-piece/IMG-20260628-WA0009.jpg": {
+    "h": 1600,
+    "jpg": "assets/looks/img-20260628-wa0009.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "6e417a0164864bd5b97c126c4c362e728484380e",
+    "src": "suits/three-piece/IMG-20260628-WA0009.jpg",
+    "w": 1200,
+    "webp": "assets/looks/img-20260628-wa0009.webp"
+  },
+  "suits/three-piece/IMG-20260628-WA0012.jpg": {
+    "h": 1600,
+    "jpg": "assets/looks/img-20260628-wa0012.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "b0cf13a43df7a2447a94134f7cae361ba5a71cf4",
+    "src": "suits/three-piece/IMG-20260628-WA0012.jpg",
+    "w": 1200,
+    "webp": "assets/looks/img-20260628-wa0012.webp"
+  },
+  "suits/three-piece/IMG-20260628-WA0014.jpg": {
+    "h": 1600,
+    "jpg": "assets/looks/img-20260628-wa0014.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "01c0f88f3a669c4713875373e4d0b1f9f11f26f1",
+    "src": "suits/three-piece/IMG-20260628-WA0014.jpg",
+    "w": 1200,
+    "webp": "assets/looks/img-20260628-wa0014.webp"
+  },
+  "suits/three-piece/IMG-20260628-WA0016.jpg": {
+    "h": 1569,
+    "jpg": "assets/looks/img-20260628-wa0016.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "4bd2586b365aaa7a9991b1fccd77e8902c878b1d",
+    "src": "suits/three-piece/IMG-20260628-WA0016.jpg",
+    "w": 1177,
+    "webp": "assets/looks/img-20260628-wa0016.webp"
+  },
+  "suits/three-piece/IMG-20260705-WA0018.jpg": {
+    "h": 1600,
+    "jpg": "assets/looks/img-20260705-wa0018.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "11c5002bb1e1c7d815bde45c1301ee386bd58e22",
+    "src": "suits/three-piece/IMG-20260705-WA0018.jpg",
+    "w": 1200,
+    "webp": "assets/looks/img-20260705-wa0018.webp"
+  },
+  "suits/three-piece/IMG-20260705-WA0020.jpg": {
+    "h": 1600,
+    "jpg": "assets/looks/img-20260705-wa0020.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "f864b030fd9fced895054c64fed3167a181a9871",
+    "src": "suits/three-piece/IMG-20260705-WA0020.jpg",
+    "w": 1200,
+    "webp": "assets/looks/img-20260705-wa0020.webp"
+  },
+  "suits/three-piece/IMG-20260719-WA0021.jpg": {
+    "h": 1523,
+    "jpg": "assets/looks/img-20260719-wa0021.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "f0d225b68ca71851d901d8121e96a477db19c9ba",
+    "src": "suits/three-piece/IMG-20260719-WA0021.jpg",
+    "w": 1142,
+    "webp": "assets/looks/img-20260719-wa0021.webp"
+  },
+  "suits/three-piece/IMG-20260719-WA0025.jpg": {
+    "h": 1600,
+    "jpg": "assets/looks/img-20260719-wa0025.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "d0add108b15078a538e1974f766c030fe6ee56f6",
+    "src": "suits/three-piece/IMG-20260719-WA0025.jpg",
+    "w": 1200,
+    "webp": "assets/looks/img-20260719-wa0025.webp"
+  },
+  "suits/three-piece/IMG-20260719-WA0030.jpg": {
+    "h": 1600,
+    "jpg": "assets/looks/img-20260719-wa0030.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "c241ccbb262b437428bfa9de6816b470b5239980",
+    "src": "suits/three-piece/IMG-20260719-WA0030.jpg",
+    "w": 1200,
+    "webp": "assets/looks/img-20260719-wa0030.webp"
+  },
+  "suits/three-piece/IMG-20260719-WA0031.jpg": {
+    "h": 1523,
+    "jpg": "assets/looks/img-20260719-wa0031.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "ee3e00767f5fa03ef61e12cf4e16a846590f8851",
+    "src": "suits/three-piece/IMG-20260719-WA0031.jpg",
+    "w": 1142,
+    "webp": "assets/looks/img-20260719-wa0031.webp"
+  },
+  "suits/three-piece/IMG-20260719-WA0033.jpg": {
+    "h": 1600,
+    "jpg": "assets/looks/img-20260719-wa0033.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "f287f4483ae0769487766c98885dccaaa72c2263",
+    "src": "suits/three-piece/IMG-20260719-WA0033.jpg",
+    "w": 1200,
+    "webp": "assets/looks/img-20260719-wa0033.webp"
+  },
+  "suits/three-piece/IMG-20260719-WA0035.jpg": {
+    "h": 1600,
+    "jpg": "assets/looks/img-20260719-wa0035.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "4b0655e8e16417564e5f35f7c11da8992c1d001a",
+    "src": "suits/three-piece/IMG-20260719-WA0035.jpg",
+    "w": 1200,
+    "webp": "assets/looks/img-20260719-wa0035.webp"
+  },
+  "suits/three-piece/IMG-20260719-WA0036.jpg": {
+    "h": 1600,
+    "jpg": "assets/looks/img-20260719-wa0036.jpg",
+    "ratio": [
+      3,
+      4
+    ],
+    "sig": "9462303ecbd348bcc8796b804411cd4fb21d349c",
+    "src": "suits/three-piece/IMG-20260719-WA0036.jpg",
+    "w": 1200,
+    "webp": "assets/looks/img-20260719-wa0036.webp"
   }
 }
