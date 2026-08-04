@@ -180,6 +180,14 @@ Watch the cascade here: the `pointer:coarse` block sits late in the sheet, so
 narrow-phone overrides of the same specificity lose to it. The ≤340px rules
 are written as `.hdr-in .hdr-cta` for exactly that reason.
 
+**`--hdr` must always be a length, never `auto`.** It is fed to `calc()` for
+the hero's top offset and for `scroll-margin-top`, and `calc(auto + 30px)` is
+invalid CSS — the whole declaration is dropped. Setting it to `auto` for
+mobile silently removed the hero's top padding and let the fixed header cover
+the headline, which looked fine in every automated check because nothing
+overflowed. It is 64px on desktop, 124px under 820px, 112px under 340px; the
+header's own `min-height` is switched off separately.
+
 ### Motion doctrine
 
 > Slow, orchestrated, singular. Expensive things do not hurry and do not fidget.

@@ -440,7 +440,12 @@ html.js .is-in .rise{opacity:1;transform:none}
 /* Mobile: the four items drop to a single tracked row. No dropdowns, no
    overlay, no JavaScript — it simply restacks.                         */
 @media (max-width:820px){
-  :root{--hdr:auto}
+  /* Concrete, never `auto`: this value is used inside calc() for the hero
+     offset and for scroll-margin, and `calc(auto + 30px)` is invalid CSS —
+     which silently removed the hero's top padding and let the fixed header
+     cover the headline. Measured heights: 124px here, 112px under 340px. */
+  :root{--hdr:124px}
+  .hdr-in{min-height:0}
   .hdr-in{
     flex-wrap:wrap;
     justify-content:center;
@@ -467,6 +472,7 @@ html.js .is-in .rise{opacity:1;transform:none}
   .hdr-in{gap:10px 12px}
 }
 @media (max-width:340px){
+  :root{--hdr:112px}
   /* Last resort on a 320px screen: drop the tagline from the HEADER so the
      wordmark and the WhatsApp button share a row instead of stacking into a
      158px fixed bar. The tagline still appears in the overture, on the
@@ -639,6 +645,9 @@ html.js .is-in .rise{opacity:1;transform:none}
 /* ── Sections ─────────────────────────────────────────────────────────── */
 
 section{position:relative}
+/* the header is fixed, so a jump to #prices would otherwise put the heading
+   underneath it */
+section[id],main[id]{scroll-margin-top:calc(var(--hdr) + 12px)}
 .band{padding-block:var(--band)}
 
 .split{
