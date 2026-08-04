@@ -250,7 +250,7 @@ Section anchors: `#house` `#prices` `#occasions` `#visit` `#enquiry`
 3. Hero — video/still, masked headline, WhatsApp CTA
 4. **The Creed** — 20 min / same day / five days
 5. **The House** — atelier story + dress form
-6. **The Collection** — category tiles + full-catalogue links
+6. **The Collection** — a continuous rail of the sixteen three-piece suits
 7. **The Price List** — the signature section
 8. Occasions — 4 tiles
 9. The Process — three steps
@@ -326,7 +326,7 @@ implications first.
       size problem above.
 - [x] **Store video — live in the hero.** A 12s loop cut from
       `media/video/VID2.mp4` (43s–56s): 720×1280, audio stripped, MP4 2.7 MB +
-      WebM 1.9 MB, poster and og:image beside them in `assets/hero/`. The
+      WebM 3.3 MB, poster and og:image beside them in `assets/hero/`. The
       camera is walking, so a plain cut would hard-jump at the loop point —
       the tail is crossfaded back over the head instead, measured at ~4.5×
       smoother than an arbitrary cut. Exact commands in `media/README.md`.
@@ -334,7 +334,10 @@ implications first.
       script; CSS alone cannot pause a video, and an autoplaying loop is the
       largest piece of motion on the page.
 - [ ] **Reshoot the store video in landscape, 1080p.** `VID2.mp4` is a
-      478×850 portrait phone clip. It is close to a 1:1 fit on a phone and
+      478×850 portrait phone clip. **`VID1.mp4` is not a substitute** — it is a
+      template advert of a different shop carrying claims that are false for
+      this business ("Modern British Tailoring", "Selected stores. Design
+      development."). See `media/README.md` before anyone tries it again. It is close to a 1:1 fit on a phone and
       looks genuinely good there, but the desktop hero scales it ~3× and it
       goes soft. The veil covers for it. **This is the single biggest visual
       upgrade available to the page.** `VID1.mp4` is still unused.

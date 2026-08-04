@@ -80,7 +80,7 @@ The script removes GPS coordinates from the file, but it cannot remove a face.
 ## Store video
 
 Encoded by hand, not by the build script. **Currently live:** a 12s loop cut
-from `video/VID2.mp4` (43s–56s), 720×1280, audio stripped, 2.7 MB.
+from `video/VID2.mp4` (43s–56s), 1080×1920, audio stripped, 3.4 MB.
 
 ### Why it loops without a jump
 
@@ -101,29 +101,31 @@ loop join is ~4.5× smoother than an arbitrary cut in the same clip.
 ### The commands
 
 ```bash
-# 1. pull the segment out at high quality first
-ffmpeg -ss 43 -t 13 -i media/video/VID2.mp4 -an \
-       -c:v libx264 -crf 16 -preset slow /tmp/seg.mp4
-
-# 2. crossfade the tail back over the head, scale, encode
-FILTER="[0:v]trim=start=0:end=1,setpts=PTS-STARTPTS[head];\
-[0:v]trim=start=1:end=12,setpts=PTS-STARTPTS[body];\
-[0:v]trim=start=12:end=13,setpts=PTS-STARTPTS[tail];\
+# One pass from the ORIGINAL — no intermediate re-encode to lose detail to.
+# Order matters: denoise BEFORE upscaling (so compression noise is not
+# magnified), sharpen AFTER (to put back the edge the upscale softened).
+FILTER="[0:v]hqdn3d=4:3:6:4.5,scale=1080:1920:flags=lanczos+accurate_rnd,\
+unsharp=5:5:0.75:5:5:0.3,format=yuv420p[clean];\
+[clean]split=3[a][b][c];\
+[a]trim=0:1,setpts=PTS-STARTPTS[head];\
+[b]trim=1:12,setpts=PTS-STARTPTS[body];\
+[c]trim=12:13,setpts=PTS-STARTPTS[tail];\
 [tail][head]blend=all_expr='A*(1-(T/1))+B*(T/1)'[x];\
-[x][body]concat=n=2:v=1:a=0,scale=720:1280:flags=lanczos,format=yuv420p[v]"
+[x][body]concat=n=2:v=1:a=0[v]"
 
-ffmpeg -i /tmp/seg.mp4 -filter_complex "$FILTER" -map "[v]" -an \
-       -c:v libx264 -profile:v high -crf 25 -preset slow \
+ffmpeg -ss 43 -t 13 -i media/video/VID2.mp4 -filter_complex "$FILTER" -map "[v]" -an \
+       -c:v libx264 -profile:v high -crf 29 -preset slow \
        -pix_fmt yuv420p -movflags +faststart -r 30 assets/hero/store.mp4
 
-# 3. WebM/VP9 alongside — ~30% smaller on Android
-ffmpeg -i assets/hero/store.mp4 -an -c:v libvpx-vp9 -crf 36 -b:v 0 \
-       -row-mt 1 -deadline good -cpu-used 2 assets/hero/store.webm
+# WebM/VP9 from the SOURCE too, not from the mp4 above
+ffmpeg -ss 43 -t 13 -i media/video/VID2.mp4 -filter_complex "$FILTER" -map "[v]" -an \
+       -c:v libvpx-vp9 -crf 40 -b:v 0 -row-mt 1 -deadline good -cpu-used 2 \
+       -pix_fmt yuv420p assets/hero/store.webm
 
-# 4. poster = the video's OWN first frame, so there is no jump on play
+# poster = the video's OWN first frame, so there is no jump on play
 ffmpeg -i assets/hero/store.mp4 -frames:v 1 -q:v 3 assets/hero/poster.jpg
 
-# 5. og:image, 1200x630
+# og:image, 1200x630
 ffmpeg -ss 6 -i assets/hero/store.mp4 \
        -vf "scale=1200:-1:flags=lanczos,crop=1200:630" -frames:v 1 -q:v 3 \
        assets/hero/og.jpg
@@ -134,13 +136,38 @@ the whole element blocked by the browser. Neither is `-movflags +faststart`,
 which moves the index to the front so playback can begin before the file has
 finished downloading.
 
+### Why 1080 and not 720
+
+The browser scales the video to cover the hero. At a 720-wide encode the
+browser was doing a **2.0x bilinear upscale** on desktop; at 1080 it only does
+1.33x, and the rest of the work is done by lanczos in ffmpeg, which is sharper
+than any browser's scaler. Same reason the CSS drift was pulled back from
+1.06–1.13 to 1.03–1.08: every extra percent of scale is another percent of
+softness on a clip that is already being enlarged.
+
+### ⚠ VID1.mp4 — do NOT put this on the site
+
+`VID1.mp4` is **not footage of the shop.** It is a branded template advert:
+title cards reading "THE ART OF DESIGN", "THE ART OF CUT" and **"MODERN
+BRITISH TAILORING"**, stock CGI of thread spools and pattern blueprints, the
+burnt-in line **"Selected stores. Design development."**, and a studio group
+shot in a room that is nothing like the Johannesburg CBD store. It ends on the
+Men Exclusive logo card, which is the only part that belongs to them.
+
+Using it would publish two claims that are false for this business — a British
+tailoring house, and a multi-store operation with a design department — and
+would show customers a shop they will not find when they arrive. It also
+cannot work as a silent background loop: it is a narrative edit with burnt-in
+text that would fight the hero headline.
+
 ### Known limitation
 
-`VID2.mp4` is **478×850 — a portrait phone clip**. The hero is full-bleed
-landscape on desktop, so the video is scaled roughly 3× and looks soft. The
-dark veil over it hides most of that, and it looks genuinely good on a phone
-where it is close to a 1:1 fit. **A landscape reshoot at 1080p is the single
-biggest visual upgrade available to this page.** Shoot it walking slowly, in
-landscape, and hold the camera level.
+`VID2.mp4` is **478×850 — a portrait phone clip**. Encoding at 1080 with
+denoise and sharpening recovers a lot, and the dark veil hides more, but the
+detail simply is not in the source: it looks genuinely good on a phone, where
+it is close to a 1:1 fit, and merely acceptable blown up to a desktop hero.
 
-`VID1.mp4` (3.2 MB, also uploaded) is unused so far.
+**A landscape reshoot at 1080p is still the single biggest visual upgrade
+available to this page.** Shoot it walking slowly, in landscape, holding the
+camera level — and shoot the shopfront with the street number legible while
+you are there.

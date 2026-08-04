@@ -26,7 +26,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Franklin:wght@200;300;400;500&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Franklin:wght@200;300;400;500&family=Montserrat:wght@500;600;700&family=Pinyon+Script&display=swap" rel="stylesheet">
 
 <script>document.documentElement.className += " js";</script>
 
@@ -460,9 +460,12 @@ html.js .is-in .rise{opacity:1;transform:none}
   /* Slow enough never to be consciously noticed. */
   animation:drift 34s ease-in-out infinite alternate;
 }
+/* Kept tight on purpose. The source is a phone clip already being scaled up
+   to fill a desktop hero; every extra percent of drift scale is another
+   percent of softness on top. 1.03-1.08 still reads as movement. */
 @keyframes drift{
-  from{transform:scale(1.06) translate3d(0,0,0)}
-  to  {transform:scale(1.13) translate3d(-1.6%,-1.4%,0)}
+  from{transform:scale(1.03) translate3d(0,0,0)}
+  to  {transform:scale(1.08) translate3d(-1.2%,-1.1%,0)}
 }
 
 /* The dark field is load-bearing: the stock is rust, lilac, camel, olive
@@ -640,49 +643,61 @@ section{position:relative}
   line-height:2;
 }
 
-/* ── Collection ───────────────────────────────────────────────────────── */
+/* ── The rail ─────────────────────────────────────────────────────────────
+   A continuous band of what is actually hanging in the shop. No labels, no
+   prices — this section exists to be looked at, not read. The price list
+   two sections down does the selling.
 
-/* minmax(0,1fr) — a bare 1fr floors at the tile's min-content width, and the
-   price label is nowrap, so the grid refuses to shrink below ~190px a column
-   and pushes the page sideways on a small phone. */
-.cats{
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:clamp(10px,1.4vw,18px);
-  margin-top:clamp(34px,4.6vw,58px);
-}
-@media (max-width:900px){.cats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+   The track holds the sixteen suits TWICE and translates exactly -50%, so
+   the wrap is invisible. That only stays exact if every item box is the same
+   width: spacing therefore lives on margin-right, never on `gap`, because a
+   flex gap is not applied after the final child and the loop would drift.  */
 
-.cat{
-  text-decoration:none;
-  display:block;
+.rail{
   position:relative;
-  min-width:0;
+  margin-top:clamp(30px,4vw,48px);
+  margin-inline:calc(var(--gut) * -1);   /* full bleed, out past the gutter */
+  overflow:hidden;
+  /* the band fades out rather than being chopped by a hard edge */
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
 }
-.cat .frame{transition:border-color .9s var(--silk)}
-.cat:hover .frame,.cat:focus-visible .frame{border-color:var(--gold-lo)}
-.cat .frame img{transition:transform 1.5s var(--silk)}
-.cat:hover .frame img{transform:scale(1.045)}
-.cat-name{
+
+.rail-track{
   display:flex;
-  flex-wrap:wrap;              /* price drops beneath the label on a phone */
-  align-items:baseline;
-  justify-content:space-between;
-  gap:4px 12px;
-  margin-top:14px;
-  font-family:var(--caps);
-  font-weight:600;
-  font-size:10.5px;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  color:var(--ivory);
+  width:max-content;
+  animation:rail 150s linear infinite;
+  will-change:transform;
 }
-.cat-name em{
-  font-style:normal;
-  font-weight:500;
-  color:var(--gold);
-  letter-spacing:.12em;
-  white-space:nowrap;
+@keyframes rail{ to{ transform:translate3d(-50%,0,0) } }
+
+/* Let someone stop and actually look at a suit. */
+.rail:hover .rail-track{animation-play-state:paused}
+
+.rail figure{
+  margin:0 clamp(10px,1.4vw,18px) 0 0;   /* the spacing the -50% maths needs */
+  flex:none;
+  width:clamp(214px,23vw,304px);          /* ~15% larger than the old 264px tiles */
+}
+.rail picture{display:block}
+.rail img{
+  display:block;
+  width:100%;
+  aspect-ratio:3/4;
+  object-fit:cover;
+  border-radius:4px;                      /* corners just off square */
+  border:1px solid var(--noir-3);
+}
+
+/* The one cursive word on the page. */
+.script{
+  font-family:"Pinyon Script","Libre Caslon Display",cursive;
+  font-size:clamp(40px,6vw,74px);
+  line-height:1;
+  text-align:center;
+  color:var(--ivory);
+  margin:clamp(26px,3.4vw,42px) 0 0;
+  font-weight:400;
 }
 
 /* ── Price list — the signature section ──────────────────────────────────
@@ -1084,6 +1099,11 @@ section{position:relative}
     scroll-behavior:auto !important;
   }
   .overture{display:none}
+  /* A 150s marquee is still motion. Stop it and hand control back — without
+     this the global animation-duration override would snap the track to its
+     end frame instead of leaving it at rest. */
+  .rail{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
+  .rail-track{animation:none !important;transform:none !important;width:auto}
   html.js .line>span{transform:none}
   html.js .rise{opacity:1;transform:none}
   html.js .rule{clip-path:none}
@@ -1249,49 +1269,205 @@ section{position:relative}
         <span class="line" style="--d:.12s"><span>on the rail.</span></span>
       </h2>
 
-      <div class="cats">
-        <a class="cat rise" href="https://wa.me/27630512118?text=Good%20day%20Men%20Exclusive.%20I%27d%20like%20to%20see%20what%20suits%20you%20have%20in." target="_blank" rel="noopener">
-          <div class="frame frame--portrait" data-label="Suits">
-            <picture>
-              <source srcset="assets/looks/img-20260705-wa0018.webp" type="image/webp">
-              <img src="assets/looks/img-20260705-wa0018.jpg" alt="A blue checked three-piece suit on a dress form, trousers folded over the arm, against the shop&#39;s black-green marble." loading="lazy" onerror="this.style.visibility='hidden'">
-            </picture>
-          </div>
-          <span class="cat-name">Suits <em>from R2 500</em></span>
-        </a>
-
-        <a class="cat rise" style="--d:.1s" href="https://wa.me/27630512118?text=Good%20day%20Men%20Exclusive.%20I%27d%20like%20to%20see%20what%20coats%20you%20have%20in." target="_blank" rel="noopener">
-          <div class="frame frame--portrait" data-label="Outerwear">
-            <picture>
-              <source srcset="assets/looks/img-20260524-wa0026.webp" type="image/webp">
-              <img src="assets/looks/img-20260524-wa0026.jpg" alt="Olive and blush long overcoats on mannequins with gold chrome heads, either side of a navy three-piece suit." loading="lazy" onerror="this.style.visibility='hidden'">
-            </picture>
-          </div>
-          <span class="cat-name">Outerwear <em>R1 500</em></span>
-        </a>
-
-        <a class="cat rise" style="--d:.2s" href="https://wa.me/27630512118?text=Good%20day%20Men%20Exclusive.%20I%27d%20like%20to%20see%20what%20shirts%20you%20have%20in." target="_blank" rel="noopener">
-          <div class="frame frame--portrait" data-label="Shirting">
-            <picture>
-              <source srcset="assets/looks/still-vid2-shirt-rails.webp" type="image/webp">
-              <img src="assets/looks/still-vid2-shirt-rails.jpg" alt="Rails of shirts in navy, pink and grey hanging in the shop&#39;s green cabinetry." loading="lazy" onerror="this.style.visibility='hidden'">
-            </picture>
-          </div>
-          <span class="cat-name">Shirting <em>R450</em></span>
-        </a>
-
-        <a class="cat rise" style="--d:.3s" href="https://wa.me/27630512118?text=Good%20day%20Men%20Exclusive.%20I%27d%20like%20to%20see%20what%20accessories%20you%20have%20in." target="_blank" rel="noopener">
-          <div class="frame frame--portrait" data-label="Accessories">
-            <picture>
-              <source srcset="assets/looks/still-vid2-rope-tie.webp" type="image/webp">
-              <img src="assets/looks/still-vid2-rope-tie.jpg" alt="A cream rope bow tie fastened at the collar of a navy shirt." loading="lazy" onerror="this.style.visibility='hidden'">
-            </picture>
-          </div>
-          <span class="cat-name">Accessories <em>from R150</em></span>
-        </a>
+      <div class="rail" aria-label="Three-piece suits currently on the rail">
+      <div class="rail-track">
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260628-wa0004.webp" type="image/webp">
+            <img src="assets/looks/img-20260628-wa0004.jpg" alt="A pale sage three-piece suit on a dress form." loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260628-wa0005.webp" type="image/webp">
+            <img src="assets/looks/img-20260628-wa0005.jpg" alt="A camel three-piece suit on a dress form." loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260628-wa0007.webp" type="image/webp">
+            <img src="assets/looks/img-20260628-wa0007.jpg" alt="A grey-blue three-piece suit on a dress form." loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260628-wa0009.webp" type="image/webp">
+            <img src="assets/looks/img-20260628-wa0009.jpg" alt="An orange three-piece suit on a dress form." loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260628-wa0012.webp" type="image/webp">
+            <img src="assets/looks/img-20260628-wa0012.jpg" alt="A cream checked three-piece suit on a dress form." loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260628-wa0014.webp" type="image/webp">
+            <img src="assets/looks/img-20260628-wa0014.jpg" alt="A blue checked three-piece suit on a dress form." loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260628-wa0016.webp" type="image/webp">
+            <img src="assets/looks/img-20260628-wa0016.jpg" alt="A lilac three-piece suit on a dress form." loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260705-wa0018.webp" type="image/webp">
+            <img src="assets/looks/img-20260705-wa0018.jpg" alt="A blue three-piece suit with a tan windowpane check." loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260705-wa0020.webp" type="image/webp">
+            <img src="assets/looks/img-20260705-wa0020.jpg" alt="A pink checked three-piece suit on a dress form." loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260719-wa0021.webp" type="image/webp">
+            <img src="assets/looks/img-20260719-wa0021.jpg" alt="A rose pink three-piece suit on a dress form." loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260719-wa0025.webp" type="image/webp">
+            <img src="assets/looks/img-20260719-wa0025.jpg" alt="A charcoal three-piece suit with a white shirt and red tie." loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260719-wa0030.webp" type="image/webp">
+            <img src="assets/looks/img-20260719-wa0030.jpg" alt="A cream checked three-piece suit on a dress form." loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260719-wa0031.webp" type="image/webp">
+            <img src="assets/looks/img-20260719-wa0031.jpg" alt="An ivory three-piece suit on a dress form." loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260719-wa0033.webp" type="image/webp">
+            <img src="assets/looks/img-20260719-wa0033.jpg" alt="A dusty pink three-piece suit on a dress form." loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260719-wa0035.webp" type="image/webp">
+            <img src="assets/looks/img-20260719-wa0035.jpg" alt="A mustard three-piece suit on a dress form." loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260719-wa0036.webp" type="image/webp">
+            <img src="assets/looks/img-20260719-wa0036.jpg" alt="A tan three-piece suit on a dress form." loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260628-wa0004.webp" type="image/webp">
+            <img src="assets/looks/img-20260628-wa0004.jpg" alt="" aria-hidden="true" loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260628-wa0005.webp" type="image/webp">
+            <img src="assets/looks/img-20260628-wa0005.jpg" alt="" aria-hidden="true" loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260628-wa0007.webp" type="image/webp">
+            <img src="assets/looks/img-20260628-wa0007.jpg" alt="" aria-hidden="true" loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260628-wa0009.webp" type="image/webp">
+            <img src="assets/looks/img-20260628-wa0009.jpg" alt="" aria-hidden="true" loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260628-wa0012.webp" type="image/webp">
+            <img src="assets/looks/img-20260628-wa0012.jpg" alt="" aria-hidden="true" loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260628-wa0014.webp" type="image/webp">
+            <img src="assets/looks/img-20260628-wa0014.jpg" alt="" aria-hidden="true" loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260628-wa0016.webp" type="image/webp">
+            <img src="assets/looks/img-20260628-wa0016.jpg" alt="" aria-hidden="true" loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260705-wa0018.webp" type="image/webp">
+            <img src="assets/looks/img-20260705-wa0018.jpg" alt="" aria-hidden="true" loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260705-wa0020.webp" type="image/webp">
+            <img src="assets/looks/img-20260705-wa0020.jpg" alt="" aria-hidden="true" loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260719-wa0021.webp" type="image/webp">
+            <img src="assets/looks/img-20260719-wa0021.jpg" alt="" aria-hidden="true" loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260719-wa0025.webp" type="image/webp">
+            <img src="assets/looks/img-20260719-wa0025.jpg" alt="" aria-hidden="true" loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260719-wa0030.webp" type="image/webp">
+            <img src="assets/looks/img-20260719-wa0030.jpg" alt="" aria-hidden="true" loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260719-wa0031.webp" type="image/webp">
+            <img src="assets/looks/img-20260719-wa0031.jpg" alt="" aria-hidden="true" loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260719-wa0033.webp" type="image/webp">
+            <img src="assets/looks/img-20260719-wa0033.jpg" alt="" aria-hidden="true" loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260719-wa0035.webp" type="image/webp">
+            <img src="assets/looks/img-20260719-wa0035.jpg" alt="" aria-hidden="true" loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <source srcset="assets/looks/img-20260719-wa0036.webp" type="image/webp">
+            <img src="assets/looks/img-20260719-wa0036.jpg" alt="" aria-hidden="true" loading="lazy" onerror="this.style.visibility='hidden'">
+          </picture>
+        </figure>
       </div>
+    </div>
 
-      <p class="micro rise" style="--d:.4s;margin-top:clamp(24px,3vw,34px)">Stock changes weekly. Message us for what is on the rail today.</p>
+      <p class="script rise">Suits</p>
+<p class="micro rise" style="--d:.4s;margin-top:clamp(20px,2.4vw,28px);text-align:center">Stock changes weekly. <a href="https://wa.me/27630512118" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;border-bottom:1px solid var(--gold-lo)">Message us for what is on the rail today.</a></p>
     </div>
   </section>
 
@@ -1841,7 +2017,7 @@ section{position:relative}
      Initial hidden states live under `html.js` only, so a JavaScript
      failure leaves every word on the page visible.                    */
   var pending = Array.prototype.slice.call(document.querySelectorAll(
-    ".line, .rise, .rule, .creed-cell, .menu-set, .step, .look, .fact, .cat, .occ > div"
+    ".line, .rise, .rule, .creed-cell, .menu-set, .step, .look, .fact, .rail, .occ > div"
   ));
 
   var revealAll = function(){
