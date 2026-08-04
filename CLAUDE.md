@@ -1,6 +1,6 @@
 # Men Exclusive — Website Build Brief
 
-Handover context for continuing work on `men-exclusive.html`. Read this fully
+Handover context for continuing work on `index.html`. Read this fully
 before editing. It records what is **confirmed fact**, what is **still
 unverified**, and what must **never be invented**.
 
@@ -182,7 +182,7 @@ fails to run or throws, nothing is ever left invisible.
 Single file, no build step, no framework. Dependencies: Google Fonts only.
 
 ```
-men-exclusive.html          the site — single file, no build step
+index.html                  the site — single file, no build step
 CLAUDE.md                   this brief
 tools/build-media.py        media pipeline (needs: pip install pillow)
 tools/.media-manifest.json  GENERATED — change-detection state, committed
@@ -340,3 +340,8 @@ implications first.
   comments** — these are instructions, not live, and will show as "missing"
   in naive link checks.
 - Deploys as static files. Relative paths already work on Vercel as-is.
+- **The site file must stay named `index.html`.** A static host serves `/`
+  from `index.html` and nothing else. It was briefly called
+  `men-exclusive.html`, which built and deployed green while every visitor to
+  the root URL got a 404 — the deploy status says nothing about whether
+  anything answers `/`. Renaming it is not cosmetic; it takes the site down.

@@ -86,7 +86,7 @@ SKIP_DIRS = {"_inbox", "video"}
 
 SOURCE_EXT = {".jpg", ".jpeg", ".png", ".tif", ".tiff", ".webp", ".heic", ".heif"}
 
-# Frame classes in men-exclusive.html, so the printed markup drops straight in.
+# Frame classes in index.html, so the printed markup drops straight in.
 FRAME_CLASS = {
     (3, 4):  "frame--portrait",
     (2, 3):  "frame--tall",
