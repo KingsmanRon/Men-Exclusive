@@ -1,1 +1,16 @@
-{}
+{
+  "brand/blackandgold.png": {
+    "alpha": true,
+    "h": 512,
+    "ico": "assets/brand/blackandgold-64.png",
+    "jpg": "assets/brand/blackandgold.png",
+    "ratio": [
+      1,
+      1
+    ],
+    "sig": "7db138c5bf94179b96148a0798dc9870320dfc19",
+    "src": "brand/blackandgold.png",
+    "w": 512,
+    "webp": "assets/brand/blackandgold.webp"
+  }
+}

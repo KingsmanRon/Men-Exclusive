@@ -204,8 +204,14 @@ assets/                     GENERATED — never edit by hand
   collection/ (empty — category tiles borrow from looks/ for now)
   occasions/  (empty — needs occasion photography)
   hero/       (empty — video + poster)
-  brand/      (empty — needs emblem.svg)
+  brand/      blackandgold.png  blackandgold.webp  blackandgold-64.png
 ```
+
+`RULES` in the build script marks the `brand` category `alpha: True`. That
+switches it from the photograph path to the logo path: key the black plate
+out to a real alpha channel, trim to the mark, write PNG + WebP + a 64px
+favicon, and print a bare `<img>` rather than a `.frame`. Photographs are
+never keyed — only entries flagged `alpha`.
 
 **No photography has been supplied yet.** Every `assets/` folder is currently
 empty. The HTML already references the filenames above so the page completes
@@ -286,12 +292,28 @@ implications first.
 
 ### Blocking
 
-- [ ] **Emblem SVG.** Three placeholders in the HTML (overture, header,
-      footer/plaque), each with the exact `<img>` tag to paste in. Request a
-      **single flat path SVG** — the mark inverts (gold-on-cream on
-      stationery, black-on-gold on the plaque), so one recolourable path beats
-      two files. The overture currently draws a plain open diamond, which is
-      their own ornament, not an invented logo — replace it, don't ship it.
+- [x] **House mark — supplied and live in the overture.**
+      `media/brand/blackandgold.png` — a gold leopard head, 1254×1254, sent as
+      gold on a solid black plate with no alpha. The build script keys that
+      plate out (luminance becomes alpha), trims to the mark's own edges and
+      writes `assets/brand/blackandgold.{png,webp}` plus a 64px favicon. This
+      matters: the plate is pure `#000`, the page field is `#08080A`, and the
+      plaque is green marble — dropped in as supplied it would show as a black
+      square on both.
+- [ ] **Mark in the header and the plaque.** Two placeholders still carry
+      comments (`EMBLEM PLACEHOLDER 2 of 3`, `3 of 3`). Held back deliberately,
+      not forgotten:
+      - the header wordmark is 26px tall and this mark is fine-detailed — it
+        turns to mud at that size and needs a simplified variant;
+      - the plaque is a composed lockup (wordmark / rule / tagline) and
+        dropping a leopard into it changes its character. That is a design
+        call for the client, not a mechanical paste.
+- [ ] **Vector version of the mark.** The supplied file is raster, so it
+      cannot be recoloured and softens when scaled up. A **single flat path
+      SVG** is still worth asking for — the mark inverts (gold-on-cream on
+      stationery, black-on-gold on the plaque), and one recolourable path
+      beats maintaining a file per colourway. It would also solve the header
+      size problem above.
 - [ ] **Store video.** Encode before uploading:
       MP4/H.264, 1920×1080, 10–16s seamless loop, **audio track stripped**,
       under 4 MB. Export WebM/VP9 alongside (~30% smaller on Android).

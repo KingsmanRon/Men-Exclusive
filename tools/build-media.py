@@ -78,7 +78,13 @@ RULES = {
 
     "occasions":                 {"out": "occasions",  "ratio": (3, 4),  "focus": 0.34, "width": 1200},
 
-    "brand":                     {"out": "brand",      "ratio": (1, 1),  "focus": 0.50, "width": 800},
+    # alpha:True marks a LOGO, not a photograph. The mark is keyed off its
+    # black backing plate into a real alpha channel, trimmed to its own edges
+    # and written as PNG + WebP. Without this the artwork ships as an opaque
+    # black square, which is invisible on the page field (#08080A is warm, the
+    # plate is pure #000) and plainly wrong over the plaque's green marble.
+    "brand":                     {"out": "brand",      "ratio": (1, 1),  "focus": 0.50, "width": 512,
+                                  "alpha": True, "pad": 0.04},
 }
 
 # Never walked.
@@ -147,7 +153,71 @@ def crop_to(img: Image.Image, ratio, focus: float) -> Image.Image:
     return img.crop((0, top, w, top + new_h))
 
 
+def key_out_black(im: Image.Image, pad: float) -> Image.Image:
+    """Turn gold-on-black artwork into a transparent PNG.
+
+    Luminance becomes alpha: black backing plate -> fully transparent, the
+    mark -> opaque, and the soft edges in between keep a partial alpha so the
+    thing still reads cleanly when composited over any dark ground. Colour is
+    left untouched, so the gold stays the gold the client supplied.
+    """
+    rgb = im.convert("RGB")
+    alpha = rgb.convert("L")
+
+    # Firm up the mid-tones. Straight luminance leaves the mark looking thin
+    # and washed out, because gold is nowhere near white.
+    alpha = alpha.point(lambda v: min(255, int(v * 1.7)))
+
+    out = rgb.copy()
+    out.putalpha(alpha)
+
+    # Trim the dead margin, then re-centre on a square canvas. The supplied
+    # artwork carries a lot of empty plate; without this the mark renders far
+    # smaller than the box it is given.
+    box = alpha.point(lambda v: 255 if v > 8 else 0).getbbox()
+    if box:
+        out = out.crop(box)
+
+    side = max(out.size)
+    side = int(round(side * (1 + pad * 2)))
+    canvas = Image.new("RGBA", (side, side), (0, 0, 0, 0))
+    canvas.paste(out, ((side - out.width) // 2, (side - out.height) // 2), out)
+    return canvas
+
+
 def process(src: Path, rel: Path, rule: dict):
+    if rule.get("alpha"):
+        with Image.open(src) as im:
+            mark = key_out_black(im, rule.get("pad", 0.0))
+            w = min(rule["width"], mark.width)
+            if w != mark.width:
+                mark = mark.resize((w, w), Image.LANCZOS)
+
+            dest_dir = ASSETS / rule["out"]
+            dest_dir.mkdir(parents=True, exist_ok=True)
+            stem = slug(src.stem)
+            png = dest_dir / f"{stem}.png"
+            webp = dest_dir / f"{stem}.webp"
+
+            mark.save(png, "PNG", optimize=True)
+            mark.save(webp, "WEBP", quality=WEBP_QUALITY, method=6, lossless=False)
+
+            # A browser tab is 16-32 CSS px. Pointing a favicon at the full
+            # mark makes every visitor download a quarter-megabyte to draw
+            # something the size of a fingernail.
+            ico = dest_dir / f"{stem}-64.png"
+            mark.resize((64, 64), Image.LANCZOS).save(ico, "PNG", optimize=True)
+
+        return {
+            "jpg": png.relative_to(ROOT).as_posix(),   # "the raster to reference"
+            "webp": webp.relative_to(ROOT).as_posix(),
+            "ico": ico.relative_to(ROOT).as_posix(),
+            "w": w, "h": w,
+            "ratio": tuple(rule["ratio"]),
+            "src": rel.as_posix(),
+            "alpha": True,
+        }
+
     with Image.open(src) as im:
         # 1. Honour the orientation tag, then drop it. exif_transpose returns a
         #    copy with no orientation key, so the pixels are already upright.
@@ -193,6 +263,13 @@ def process(src: Path, rel: Path, rule: dict):
 
 
 def markup(rec) -> str:
+    if rec.get("alpha"):
+        # A logo goes in bare. No .frame, no placeholder ground, no onerror
+        # hiding — if the mark is missing that is a fault worth seeing.
+        return (
+            f'<img src="{rec["jpg"]}" width="{rec["w"]//8}" height="{rec["h"]//8}"\n'
+            f'     alt="Men Exclusive">'
+        )
     cls = FRAME_CLASS.get(tuple(rec["ratio"]), "frame")
     label = Path(rec["src"]).parent.name.replace("-", " ").title()
     return (
@@ -232,8 +309,14 @@ def main():
         sig = signature(src, rule)
         prev = manifest.get(rel.as_posix())
 
-        if prev and prev.get("sig") == sig and all(
-            (ROOT / prev[k]).exists() for k in ("jpg", "webp")
+        # Every recorded output must still be on disk, not just the two a
+        # photograph happens to produce — a logo also emits a favicon, and
+        # deleting one behind the script's back must force a rebuild.
+        outputs = [v for k, v in (prev or {}).items()
+                   if k in ("jpg", "webp", "ico") and isinstance(v, str)]
+
+        if prev and prev.get("sig") == sig and outputs and all(
+            (ROOT / o).exists() for o in outputs
         ):
             skipped += 1
             continue

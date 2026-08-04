@@ -5,6 +5,9 @@
 <meta name="theme-color" content="#08080A">
 <meta name="color-scheme" content="dark">
 
+<link rel="icon" type="image/png" sizes="64x64" href="assets/brand/blackandgold-64.png">
+<link rel="apple-touch-icon" href="assets/brand/blackandgold.png">
+
 <meta property="og:type" content="business.business">
 <meta property="og:site_name" content="Men Exclusive">
 <meta property="og:title" content="Men Exclusive — Dress to Impress">
@@ -272,21 +275,23 @@ html.js .is-in .rise{opacity:1;transform:none}
   100%   {opacity:0;transform:translate3d(0,-14px,0)}
 }
 
+/* Large enough for the mark to actually read — it carries fine detail that
+   turns to mud at wordmark scale. */
 .ov-mark{
-  width:44px;height:44px;
-  margin:0 auto clamp(20px,3vw,30px);
+  width:clamp(88px,15vw,140px);
+  margin:0 auto clamp(22px,3.2vw,32px);
 }
-.ov-mark svg{width:100%;height:100%;overflow:visible}
-.ov-mark rect{
-  fill:none;
-  stroke:var(--gold);
-  stroke-width:1.4;
-  vector-effect:non-scaling-stroke;
-  stroke-dasharray:200;
-  stroke-dashoffset:200;
-  animation:ov-draw 1.5s var(--silk) .1s forwards;
+.ov-mark img{width:100%;height:auto}
+/* A raster cannot draw itself on the way a stroked path can, so it settles
+   instead. Same doctrine: slow, singular, nothing springs. */
+.ov-mark picture{
+  display:block;
+  animation:ov-mark 1.5s var(--silk) .1s both;
 }
-@keyframes ov-draw{to{stroke-dashoffset:0}}
+@keyframes ov-mark{
+  from{opacity:0;transform:scale(1.055)}
+  to  {opacity:1;transform:none}
+}
 
 .ov-word{overflow:hidden;display:block}
 .ov-word span{
@@ -1083,16 +1088,15 @@ section{position:relative}
 <div class="overture" id="overture" role="presentation" aria-hidden="true">
   <div class="ov-inner">
 
-    <!-- EMBLEM PLACEHOLDER 1 of 3 — overture.
-         When assets/brand/emblem.svg lands, delete the <svg> below and paste:
-         <img src="assets/brand/emblem.svg" alt="" width="44" height="44">
-         Request a SINGLE FLAT PATH SVG: the mark inverts (gold-on-cream on
-         stationery, black-on-gold on the plaque), so one recolourable path
-         beats maintaining two files. -->
+    <!-- The house mark. Supplied as gold-on-black raster; the build script
+         keys the black plate out to a real alpha channel so it composites
+         over the page field and over the plaque's green marble alike.
+         Regenerate with: python3 tools/build-media.py -->
     <div class="ov-mark">
-      <svg viewBox="0 0 44 44" aria-hidden="true" focusable="false">
-        <rect x="7" y="7" width="30" height="30" transform="rotate(45 22 22)"></rect>
-      </svg>
+      <picture>
+        <source srcset="assets/brand/blackandgold.webp" type="image/webp">
+        <img src="assets/brand/blackandgold.png" alt="" width="512" height="512">
+      </picture>
     </div>
 
     <span class="ov-word">
