@@ -13,8 +13,11 @@
 <meta property="og:title" content="Men Exclusive — Dress to Impress">
 <meta property="og:description" content="Menswear with in-house tailoring in the Johannesburg CBD. Fitted while you wait.">
 <meta property="og:locale" content="en_ZA">
-<!-- TODO og:image — 1200x630, one frame from the store video. Absolute URL required;
-     relative paths are ignored by every scraper. Add together with the domain below.
+<!-- og:image — the file is READY at assets/hero/og.jpg (1200x630, cut from the
+     store video). Still commented out for one reason only: og:image needs an
+     ABSOLUTE URL and every scraper ignores a relative one, so it cannot be
+     switched on until the live hostname is confirmed. Uncomment this line and
+     swap EXAMPLE for the real host, together with the two tags below.
      <meta property="og:image" content="https://EXAMPLE/assets/hero/og.jpg"> -->
 <!-- TODO og:url + <link rel="canonical"> — deliberately omitted. The listed domain
      menexclusivesa.co.za is UNVERIFIED and may be parked or dead. Pointing canonical
@@ -468,8 +471,13 @@ html.js .is-in .rise{opacity:1;transform:none}
   position:absolute;
   inset:0;
   z-index:-1;
+  /* Tuned against the actual footage, not an empty black plate. The headline
+     is left-aligned, so the second gradient weights the left side where the
+     type sits and lets the right side of the room stay visible. Measured
+     worst-case contrast across the whole loop rather than eyeballed. */
   background:
-    linear-gradient(180deg,rgba(8,8,10,.86) 0%,rgba(8,8,10,.30) 34%,rgba(8,8,10,.80) 76%,var(--noir) 100%),
+    linear-gradient(180deg,rgba(8,8,10,.90) 0%,rgba(8,8,10,.50) 30%,rgba(8,8,10,.72) 62%,rgba(8,8,10,.90) 84%,var(--noir) 100%),
+    linear-gradient(90deg,rgba(8,8,10,.80) 0%,rgba(8,8,10,.46) 38%,rgba(8,8,10,.12) 64%,transparent 80%),
     radial-gradient(120% 78% at 50% 108%,rgba(8,8,10,.92),transparent 62%);
 }
 
@@ -1140,20 +1148,23 @@ section{position:relative}
   <section class="hero" id="top">
     <div class="hero-media">
 
-      <!-- STORE VIDEO — encode before uploading:
-           MP4/H.264, 1920x1080, 10-16s seamless loop, AUDIO TRACK STRIPPED,
-           under 4 MB. Export WebM/VP9 alongside (~30% smaller on Android).
-           Keep `muted` and `playsinline` or iOS refuses to autoplay.
-           Uncomment this block and DELETE the <img class="shot"> beneath it.
+      <!-- STORE VIDEO — cut from media/video/VID2.mp4: a 12s loop whose tail
+           is crossfaded back over its head, so the loop point has no jump
+           cut. Audio stripped. Exact ffmpeg commands in media/README.md.
 
-      <video autoplay muted loop playsinline preload="metadata"
-             poster="assets/store/interior.jpg">
+           `muted` and `playsinline` are load-bearing — iOS refuses to
+           autoplay without them.
+
+           The source is a 478x850 phone clip, so it is soft blown up to a
+           desktop hero; the veil below covers for it. Reshoot landscape when
+           there is a chance. Playback is stopped under prefers-reduced-motion
+           by the closing script — an autoplaying loop is the largest piece of
+           motion on the page. -->
+      <video class="shot" autoplay muted loop playsinline preload="metadata"
+             poster="assets/hero/poster.jpg" aria-hidden="true" tabindex="-1">
         <source src="assets/hero/store.webm" type="video/webm">
         <source src="assets/hero/store.mp4"  type="video/mp4">
       </video>
-      -->
-
-      <img class="shot" src="assets/store/interior.jpg" alt="The Men Exclusive shop floor — suits on the rail beneath gold-framed panelling." onerror="this.style.visibility='hidden'">
     </div>
     <div class="hero-veil"></div>
 
@@ -1746,6 +1757,18 @@ section{position:relative}
   "use strict";
 
   var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* The hero video is the largest piece of motion on the page, and CSS alone
+     cannot stop a playing video. Hold it on its poster frame instead. */
+  if (reduced) {
+    var vid = document.querySelector(".hero-media video");
+    if (vid) {
+      vid.removeAttribute("autoplay");
+      vid.removeAttribute("loop");
+      vid.preload = "none";
+      try { vid.pause(); } catch (e) {}
+    }
+  }
 
   /* ── Overture ──────────────────────────────────────────────────────────
      The overture already clears itself via CSS `forwards`. This only

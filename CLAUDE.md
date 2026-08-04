@@ -203,7 +203,7 @@ assets/                     GENERATED — never edit by hand
               03-blazer-camel.jpg    04-rail-rust.jpg
   collection/ (empty — category tiles borrow from looks/ for now)
   occasions/  (empty — needs occasion photography)
-  hero/       (empty — video + poster)
+  hero/       store.mp4  store.webm  poster.jpg  og.jpg
   brand/      blackandgold.png  blackandgold.webp  blackandgold-64.png
 ```
 
@@ -314,12 +314,20 @@ implications first.
       stationery, black-on-gold on the plaque), and one recolourable path
       beats maintaining a file per colourway. It would also solve the header
       size problem above.
-- [ ] **Store video.** Encode before uploading:
-      MP4/H.264, 1920×1080, 10–16s seamless loop, **audio track stripped**,
-      under 4 MB. Export WebM/VP9 alongside (~30% smaller on Android).
-      Poster is already wired to `assets/store/interior.jpg`. Keep `muted` and
-      `playsinline` or iOS refuses to autoplay. Uncomment the `<video>` block
-      and delete the `<img class="shot">` beneath it.
+- [x] **Store video — live in the hero.** A 12s loop cut from
+      `media/video/VID2.mp4` (43s–56s): 720×1280, audio stripped, MP4 2.7 MB +
+      WebM 1.9 MB, poster and og:image beside them in `assets/hero/`. The
+      camera is walking, so a plain cut would hard-jump at the loop point —
+      the tail is crossfaded back over the head instead, measured at ~4.5×
+      smoother than an arbitrary cut. Exact commands in `media/README.md`.
+      Playback is stopped under `prefers-reduced-motion` by the closing
+      script; CSS alone cannot pause a video, and an autoplaying loop is the
+      largest piece of motion on the page.
+- [ ] **Reshoot the store video in landscape, 1080p.** `VID2.mp4` is a
+      478×850 portrait phone clip. It is close to a 1:1 fit on a phone and
+      looks genuinely good there, but the desktop hero scales it ~3× and it
+      goes soft. The veil covers for it. **This is the single biggest visual
+      upgrade available to the page.** `VID1.mp4` is still unused.
 - [ ] **Any photography at all.** `assets/` is empty. The four store and looks
       filenames referenced in the HTML are the ones the page expects.
 
@@ -335,7 +343,9 @@ implications first.
       a matriculant, a corporate fitting, a winter coat. Reusing the mannequin
       crops here would read as padding.
 - [ ] Shopfront **exterior** with the street number legible
-- [ ] `og:image` — 1200×630, one frame from the video, absolute URL
+- [x] `og:image` — cut and ready at `assets/hero/og.jpg` (1200×630). The
+      meta tag stays commented until the domain is confirmed: og:image needs
+      an **absolute** URL and scrapers ignore a relative one.
 
 ### Before launch
 
