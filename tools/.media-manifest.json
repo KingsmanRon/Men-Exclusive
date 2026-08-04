@@ -13,6 +13,15 @@
     "w": 512,
     "webp": "assets/brand/blackandgold.webp"
   },
+  "notices/psa.jpg": {
+    "h": 1492,
+    "jpg": "assets/notices/psa.jpg",
+    "ratio": null,
+    "sig": "bd09831783fc46f317fc26c56f891a6c1983b75d",
+    "src": "notices/psa.jpg",
+    "w": 1054,
+    "webp": "assets/notices/psa.webp"
+  },
   "outerwear/winter-coats/IMG-20260524-WA0026.jpg": {
     "h": 1600,
     "jpg": "assets/looks/img-20260524-wa0026.jpg",

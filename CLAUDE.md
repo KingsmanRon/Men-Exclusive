@@ -170,6 +170,13 @@ diamond doesn't distort. Use it instead of any plain line.
   `forwards`, so it clears itself **even if JavaScript fails**. Never make
   this JS-dependent.
 - Hero video drifts over 34s — slow enough to never be consciously noticed.
+  Kept shallow (1.02–1.06): the panel already shows the film close to 1:1 and
+  scale is the enemy of that.
+- **The Process** draws a gold hairline left to right across Choose / Fit /
+  Wear over 2.6s, and each number lifts from `--gold-lo` to `--gold` as the
+  line passes. It reads as a journey rather than three boxes.
+- **The rail** in The Collection runs one slow 150s cycle, pauses on hover,
+  and stops dead under `prefers-reduced-motion`.
 
 **Progressive enhancement:** every hidden initial state is scoped under
 `html.js`, a class set by a one-line inline script in the head. If JavaScript
@@ -247,7 +254,7 @@ Section anchors: `#house` `#prices` `#occasions` `#visit` `#enquiry`
 
 1. Overture (load sequence)
 2. Fixed header — 4 nav items, no dropdowns
-3. Hero — video/still, masked headline, WhatsApp CTA
+3. Hero — masked headline beside the film shown UPRIGHT, WhatsApp CTA
 4. **The Creed** — 20 min / same day / five days
 5. **The House** — atelier story + dress form
 6. **The Collection** — a continuous rail of the sixteen three-piece suits
@@ -256,11 +263,21 @@ Section anchors: `#house` `#prices` `#occasions` `#visit` `#enquiry`
 9. The Process — three steps
 10. **The Complete Look** — whole outfits priced as one figure
 11. Visit — address, payment, premises, plaque
-12. Enquiry — WhatsApp composer
-13. Footer + `ClothingStore` JSON-LD
+12. **A Note on Payment** — the client's own printed cashless notice
+13. Enquiry — WhatsApp composer
+14. Footer + `ClothingStore` JSON-LD
 
 On narrow screens the four nav items restack into a single tracked row beneath
 the wordmark. No dropdown, no overlay, no JavaScript — it simply reflows.
+
+### Why the hero film is upright
+
+The source is a portrait phone clip. Stretched across the back of the hero the
+browser had to enlarge it **2.7×** and it looked soft. Shown at its own 9:16
+proportions in a framed panel the browser scales it **DOWN** — 0.74× on a
+desktop, 0.92× on a phone — so it is sharp. The 12s loop is unchanged; only
+the presentation is. Do not put it back to full-bleed without a landscape
+reshoot.
 
 ### Why the price list, not a product grid
 

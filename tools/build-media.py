@@ -89,6 +89,12 @@ RULES = {
     # plate is pure #000) and plainly wrong over the plaque's green marble.
     "brand":                     {"out": "brand",      "ratio": (1, 1),  "focus": 0.50, "width": 512,
                                   "alpha": True, "pad": 0.04},
+
+    # A document, not a photograph and not a logo. ratio None means DO NOT
+    # CROP — a printed notice loses its border and its meaning the moment you
+    # trim it to fit a tile, and keying it like a logo inverts it (the cream
+    # ground goes opaque and the gold text goes transparent).
+    "notices":                   {"out": "notices",    "ratio": None,    "focus": 0.50, "width": 1100},
 }
 
 # Never walked.
@@ -236,11 +242,15 @@ def process(src: Path, rel: Path, rule: dict):
         elif im.mode != "RGB":
             im = im.convert("RGB")
 
-        im = crop_to(im, rule["ratio"], rule["focus"])
-
-        rw, rh = rule["ratio"]
-        out_w = min(rule["width"], im.width)
-        out_h = int(round(out_w * rh / rw))
+        if rule["ratio"] is not None:
+            im = crop_to(im, rule["ratio"], rule["focus"])
+            rw, rh = rule["ratio"]
+            out_w = min(rule["width"], im.width)
+            out_h = int(round(out_w * rh / rw))
+        else:
+            # Uncropped: keep the document's own proportions exactly.
+            out_w = min(rule["width"], im.width)
+            out_h = int(round(im.height * out_w / im.width))
         if (out_w, out_h) != im.size:
             im = im.resize((out_w, out_h), Image.LANCZOS)
 
@@ -261,7 +271,7 @@ def process(src: Path, rel: Path, rule: dict):
         "webp": webp.relative_to(ROOT).as_posix(),
         "w": out_w,
         "h": out_h,
-        "ratio": tuple(rule["ratio"]),
+        "ratio": tuple(rule["ratio"]) if rule["ratio"] else None,
         "src": rel.as_posix(),
     }
 
@@ -274,7 +284,7 @@ def markup(rec) -> str:
             f'<img src="{rec["jpg"]}" width="{rec["w"]//8}" height="{rec["h"]//8}"\n'
             f'     alt="Men Exclusive">'
         )
-    cls = FRAME_CLASS.get(tuple(rec["ratio"]), "frame")
+    cls = FRAME_CLASS.get(tuple(rec["ratio"]), "frame") if rec["ratio"] else "frame"
     label = Path(rec["src"]).parent.name.replace("-", " ").title()
     return (
         f'<div class="frame {cls}" data-label="{label}">\n'
