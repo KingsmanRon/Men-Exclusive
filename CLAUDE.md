@@ -70,8 +70,9 @@ sits ready in the HTML.
 - **Walk-in fittings: same day**
 - **Delivery: up to 5 working days** where sizes are already known
 
-The 20-minute figure is the strongest claim in the business and currently
-leads the "creed" band. Competing made-to-measure operations quote in weeks.
+The turnaround figure is the strongest claim in the business and leads the
+"creed" band. It is stated as the client stated it — **20–60 minutes**, not
+a bare "20 minutes", because the fast end is not the promise. Competing made-to-measure operations quote in weeks.
 
 ### Payment — LIVE AND IMPORTANT
 
@@ -153,8 +154,25 @@ wordmark. Preserved: `.brand b` = `.3em`, `.brand i` = `.6em`.
 ### Ornament
 
 The **hairline → open diamond → hairline** divider (`.rule`) is lifted
-directly from their own printed notices. Reveals via `clip-path` so the
-diamond doesn't distort. Use it instead of any plain line.
+directly from their own printed notices — the cashless notice in
+`media/notices/` carries it. Reveals via `clip-path` so the diamond doesn't
+distort. Use it instead of any plain line.
+
+`.rule--v` stands the same ornament on its end. Its width must be stated:
+absolutely positioned it would otherwise stretch to its container and the
+hairline would sit off to one side. All four sides of the hero film are set
+this way, holding the panel rather than letting it float in the black.
+
+### Touch
+
+Target sizes are keyed on **`pointer:coarse`, never on viewport width** — a
+tablet in landscape is 1024px across and still driven by a thumb, so a width
+breakpoint misses it completely. The labels stay small; only the targets
+grow. Inline links inside a sentence are deliberately left alone (WCAG 2.5.8
+exempts them, and padding them would break the line they sit in).
+
+Audited at 320 / 390 / 430 / 768 / 820 / 1024: no horizontal overflow, no
+target under 40px, no body text under 11px.
 
 ### Motion doctrine
 

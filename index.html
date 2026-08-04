@@ -185,7 +185,17 @@ p:last-child{margin-bottom:0}
 .rule--short{max-width:190px}
 .rule--center{margin-inline:auto}
 
+/* vertical variant — the same ornament stood on its end. The width has to be
+   stated: absolutely positioned, it would otherwise stretch to its container
+   and the hairline would sit off to one side. */
+.rule--v{flex-direction:column;width:8px}
+.rule--v i{
+  width:1px;height:auto;
+  background:linear-gradient(180deg,transparent,var(--gold-lo) 22%,var(--gold-lo) 78%,transparent);
+}
+
 html.js .rule{clip-path:inset(0 50% 0 50%);transition:clip-path 1.4s var(--silk) var(--d,0s)}
+html.js .rule--v{clip-path:inset(50% 0 50% 0)}
 html.js .is-in .rule,
 html.js .rule.is-in{clip-path:inset(0 0 0 0)}
 
@@ -425,7 +435,9 @@ html.js .is-in .rise{opacity:1;transform:none}
   }
   .brand{order:1}
   .hdr-cta{order:2;padding:.8em 1.15em;font-size:9.5px}
-  .nav{order:3;width:100%;justify-content:center;gap:clamp(12px,4.2vw,26px)}
+  .nav{order:3;width:100%;justify-content:center;gap:clamp(10px,3.4vw,24px)}
+  /* the label is small on purpose; the TARGET must not be. Padding takes
+     each one to ~44px tall without changing how it looks. */
   .nav a{font-size:9.5px;letter-spacing:.15em}
 }
 @media (max-width:360px){
@@ -497,6 +509,22 @@ html.js .is-in .rise{opacity:1;transform:none}
   max-width:30ch;
   line-height:1.9;
 }
+
+/* The house ornament on all four sides of the film, set out into the black
+   so the panel is held rather than floating. The gap is the point — the
+   rules do not touch the frame.                                          */
+.film-wrap{
+  position:relative;
+  padding:clamp(16px,2vw,30px);
+  flex:none;
+}
+.film-rule{position:absolute;pointer-events:none}
+.film-rule--top,.film-rule--bottom{left:clamp(16px,2vw,30px);right:clamp(16px,2vw,30px)}
+.film-rule--top{top:0}
+.film-rule--bottom{bottom:0}
+.film-rule--left,.film-rule--right{top:clamp(16px,2vw,30px);bottom:clamp(16px,2vw,30px)}
+.film-rule--left{left:0}
+.film-rule--right{right:0}
 
 /* The film panel — framed like the plaque, gold hairline inset and all. */
 .hero-film{
@@ -1276,6 +1304,7 @@ html.js .step.is-in .n{color:var(--gold)}
   font-size:14px;
   transition:color .7s var(--silk);
 }
+
 .ftr a:hover,.ftr a:focus-visible{color:var(--ivory)}
 
 .ftr-base{
@@ -1289,6 +1318,28 @@ html.js .step.is-in .n{color:var(--gold)}
   align-items:center;
 }
 .ftr-base p{margin:0;font-size:11.5px;color:#5C5850;letter-spacing:.04em}
+
+/* ── Touch ────────────────────────────────────────────────────────────────
+   Keyed on `pointer:coarse`, not on width: a tablet in landscape is 1024px
+   across and still driven by a thumb, so a width breakpoint misses it
+   entirely. The labels stay small — only the TARGETS grow.
+
+   Inline links inside a sentence (the phone number, "message us") are left
+   as they are; WCAG 2.5.8 exempts them, and padding them out would break
+   the line they sit in.                                                  */
+
+@media (pointer:coarse){
+  .nav a{padding-block:13px}
+  .hdr-cta{padding:1.25em 1.6em}
+  .rc{width:48px;height:48px}
+  .lb-btn{width:52px;height:52px}
+  .ftr ul{gap:0}
+  .ftr ul a{display:inline-block;padding-block:10px}
+  /* 10px tracked caps are hard work at arm's length */
+  .creed-cell p,.hero-note,.micro,.occ-name{font-size:11.5px}
+  .notice-doc figcaption{font-size:11px}
+  .field label{font-size:10.5px}
+}
 
 /* ── Reduced motion ───────────────────────────────────────────────────────
    Every effect on this page is decorative. All of it switches off.     */
@@ -1401,13 +1452,19 @@ html.js .step.is-in .n{color:var(--gold)}
            autoplay without them. Playback is stopped under
            prefers-reduced-motion by the closing script; CSS cannot pause a
            video, and an autoplaying loop is the largest motion on the page. -->
-      <figure class="hero-film rise" style="--d:.5s">
-        <video autoplay muted loop playsinline preload="metadata"
-               poster="assets/hero/poster.jpg" aria-hidden="true" tabindex="-1">
-          <source src="assets/hero/store.webm" type="video/webm">
-          <source src="assets/hero/store.mp4"  type="video/mp4">
-        </video>
-      </figure>
+      <div class="film-wrap rise" style="--d:.5s">
+        <div class="rule film-rule film-rule--top" style="--d:.7s" aria-hidden="true"><i></i><b></b><i></i></div>
+        <div class="rule rule--v film-rule film-rule--left" style="--d:.8s" aria-hidden="true"><i></i><b></b><i></i></div>
+        <figure class="hero-film">
+          <video autoplay muted loop playsinline preload="metadata"
+                 poster="assets/hero/poster.jpg" aria-hidden="true" tabindex="-1">
+            <source src="assets/hero/store.webm" type="video/webm">
+            <source src="assets/hero/store.mp4"  type="video/mp4">
+          </video>
+        </figure>
+        <div class="rule rule--v film-rule film-rule--right" style="--d:.8s" aria-hidden="true"><i></i><b></b><i></i></div>
+        <div class="rule film-rule film-rule--bottom" style="--d:.7s" aria-hidden="true"><i></i><b></b><i></i></div>
+      </div>
 
     </div>
   </section>
@@ -1419,7 +1476,7 @@ html.js .step.is-in .n{color:var(--gold)}
     <div class="wrap">
       <div class="creed-grid">
         <div class="creed-cell rise">
-          <span class="creed-fig">20 minutes</span>
+          <span class="creed-fig">20&#8211;60 minutes</span>
           <p>Most alterations, done in-house while you wait</p>
         </div>
         <div class="creed-cell rise" style="--d:.12s">
