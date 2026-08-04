@@ -160,8 +160,10 @@ distort. Use it instead of any plain line.
 
 `.rule--v` stands the same ornament on its end. Its width must be stated:
 absolutely positioned it would otherwise stretch to its container and the
-hairline would sit off to one side. All four sides of the hero film are set
-this way, holding the panel rather than letting it float in the black.
+hairline would sit off to one side. One runs down **each side** of the hero
+film, holding the panel rather than letting it float in the black. Sides
+only — horizontals across the top and bottom were tried and read as clutter
+above a 9:16 panel.
 
 ### Touch
 
@@ -173,6 +175,10 @@ exempts them, and padding them would break the line they sit in).
 
 Audited at 320 / 390 / 430 / 768 / 820 / 1024: no horizontal overflow, no
 target under 40px, no body text under 11px.
+
+Watch the cascade here: the `pointer:coarse` block sits late in the sheet, so
+narrow-phone overrides of the same specificity lose to it. The ≤340px rules
+are written as `.hdr-in .hdr-cta` for exactly that reason.
 
 ### Motion doctrine
 
@@ -358,14 +364,16 @@ implications first.
       matters: the plate is pure `#000`, the page field is `#08080A`, and the
       plaque is green marble — dropped in as supplied it would show as a black
       square on both.
-- [ ] **Mark in the header and the plaque.** Two placeholders still carry
-      comments (`EMBLEM PLACEHOLDER 2 of 3`, `3 of 3`). Held back deliberately,
-      not forgotten:
-      - the header wordmark is 26px tall and this mark is fine-detailed — it
-        turns to mud at that size and needs a simplified variant;
-      - the plaque is a composed lockup (wordmark / rule / tagline) and
-        dropping a leopard into it changes its character. That is a design
-        call for the client, not a mechanical paste.
+- [x] **Mark in the header — live.** It sits left of the wordmark at
+      34–44px, given a little more room than the wordmark's cap height. The
+      earlier worry that it would turn to mud was pitched at 26px; at 34px
+      and up the eyes and muzzle still read. `.brand--mark` makes the header
+      lockup a row — the footer wordmark deliberately still uses plain
+      `.brand` and is unaffected.
+- [ ] **Mark on the plaque** (`EMBLEM PLACEHOLDER 3 of 3`). Held back: the
+      plaque is a composed lockup (wordmark / rule / tagline) and dropping a
+      leopard into it changes its character. That is a design call for the
+      client, not a mechanical paste.
 - [ ] **Vector version of the mark.** The supplied file is raster, so it
       cannot be recoloured and softens when scaled up. A **single flat path
       SVG** is still worth asking for — the mark inverts (gold-on-cream on

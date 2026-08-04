@@ -356,6 +356,20 @@ html.js .is-in .rise{opacity:1;transform:none}
   line-height:1;
   flex:none;
 }
+/* Header only — the footer wordmark stays a plain block. */
+.brand--mark{
+  display:flex;
+  align-items:center;
+  gap:clamp(9px,1vw,14px);
+}
+.brand-mark{
+  display:block;
+  flex:none;
+  width:clamp(34px,3.4vw,44px);
+}
+.brand-mark img{width:100%;height:auto;display:block}
+.brand-txt{display:block}
+
 .brand b{
   display:block;
   font-family:var(--caps);
@@ -442,6 +456,26 @@ html.js .is-in .rise{opacity:1;transform:none}
 }
 @media (max-width:360px){
   .nav a{font-size:9px;letter-spacing:.1em}
+  /* On the narrowest phones the mark pushed the WhatsApp button onto a row of
+     its own, and a fixed header 169px tall eats a third of the screen. Trim
+     the lockup just enough to put them back on one line. */
+  .brand-mark{width:29px}
+  .brand--mark{gap:7px}
+  .brand b{font-size:11.5px;letter-spacing:.24em}
+  .brand i{font-size:5.8px;letter-spacing:.48em}
+  .hdr-in .hdr-cta{padding:.85em 1.05em;font-size:9px}
+  .hdr-in{gap:10px 12px}
+}
+@media (max-width:340px){
+  /* Last resort on a 320px screen: drop the tagline from the HEADER so the
+     wordmark and the WhatsApp button share a row instead of stacking into a
+     158px fixed bar. The tagline still appears in the overture, on the
+     plaque and in the footer. */
+  .brand--mark i{display:none}
+  /* measured: brand 175 + cta 102 + gap 12 = 289 against 280 available.
+     Trimming the button and the gap closes the 9px. */
+  .hdr-in .hdr-cta{padding:.85em .78em;letter-spacing:.14em}
+  .hdr-in{gap:10px 8px}
 }
 
 /* ── Hero ─────────────────────────────────────────────────────────────────
@@ -510,19 +544,16 @@ html.js .is-in .rise{opacity:1;transform:none}
   line-height:1.9;
 }
 
-/* The house ornament on all four sides of the film, set out into the black
-   so the panel is held rather than floating. The gap is the point — the
-   rules do not touch the frame.                                          */
+/* The house ornament down each side of the film, set out into the black so
+   the panel is held rather than floating. Sides only — horizontals across
+   the top and bottom read as clutter above a 9:16 panel.                 */
 .film-wrap{
   position:relative;
   padding:clamp(16px,2vw,30px);
   flex:none;
 }
 .film-rule{position:absolute;pointer-events:none}
-.film-rule--top,.film-rule--bottom{left:clamp(16px,2vw,30px);right:clamp(16px,2vw,30px)}
-.film-rule--top{top:0}
-.film-rule--bottom{bottom:0}
-.film-rule--left,.film-rule--right{top:clamp(16px,2vw,30px);bottom:clamp(16px,2vw,30px)}
+.film-rule--left,.film-rule--right{top:0;bottom:0}
 .film-rule--left{left:0}
 .film-rule--right{right:0}
 
@@ -1398,12 +1429,19 @@ html.js .step.is-in .n{color:var(--gold)}
 <header class="hdr" id="hdr">
   <div class="wrap hdr-in">
 
-    <!-- EMBLEM PLACEHOLDER 2 of 3 — header.
-         Paste to the left of the wordmark inside this <a>:
-         <img src="assets/brand/emblem.svg" alt="" width="26" height="26" style="flex:none"> -->
-    <a class="brand" href="#top" aria-label="Men Exclusive — home">
-      <b>Men Exclusive</b>
-      <i>Dress to Impress</i>
+    <!-- The mark beside the wordmark. It is fine-detailed artwork being shown
+         small, so it is given a little more room than the cap height of the
+         wordmark and is decorative only — the <a> already carries the name
+         for anything reading the page aloud. -->
+    <a class="brand brand--mark" href="#top" aria-label="Men Exclusive — home">
+      <picture class="brand-mark">
+        <source srcset="assets/brand/blackandgold.webp" type="image/webp">
+        <img src="assets/brand/blackandgold.png" alt="" width="512" height="512">
+      </picture>
+      <span class="brand-txt">
+        <b>Men Exclusive</b>
+        <i>Dress to Impress</i>
+      </span>
     </a>
 
     <nav class="nav" aria-label="Primary">
@@ -1453,7 +1491,6 @@ html.js .step.is-in .n{color:var(--gold)}
            prefers-reduced-motion by the closing script; CSS cannot pause a
            video, and an autoplaying loop is the largest motion on the page. -->
       <div class="film-wrap rise" style="--d:.5s">
-        <div class="rule film-rule film-rule--top" style="--d:.7s" aria-hidden="true"><i></i><b></b><i></i></div>
         <div class="rule rule--v film-rule film-rule--left" style="--d:.8s" aria-hidden="true"><i></i><b></b><i></i></div>
         <figure class="hero-film">
           <video autoplay muted loop playsinline preload="metadata"
@@ -1463,7 +1500,6 @@ html.js .step.is-in .n{color:var(--gold)}
           </video>
         </figure>
         <div class="rule rule--v film-rule film-rule--right" style="--d:.8s" aria-hidden="true"><i></i><b></b><i></i></div>
-        <div class="rule film-rule film-rule--bottom" style="--d:.7s" aria-hidden="true"><i></i><b></b><i></i></div>
       </div>
 
     </div>
