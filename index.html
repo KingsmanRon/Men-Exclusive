@@ -665,9 +665,9 @@ section{position:relative}
 }
 
 /* ── The rail ─────────────────────────────────────────────────────────────
-   A continuous band of what is actually hanging in the shop. No labels, no
-   prices, and no gaps — the pictures butt against each other so the band
-   reads as one strip of cloth rather than a row of cards.
+   A continuous band of what is actually hanging in the shop. No labels and
+   no prices — this section exists to be looked at, and the price list two
+   sections down does the selling.
 
    Driven by scrollLeft rather than a CSS marquee, because that is the only
    way the arrows, the pause and a touch swipe can all act on the same thing.
@@ -696,6 +696,9 @@ section{position:relative}
   background:none;
   flex:none;
   width:clamp(250px,30vw,420px);
+  /* spacing lives on margin, never on `gap`: a flex gap is not applied after
+     the final child, and the -50% wrap would drift by one gap per cycle */
+  margin-right:clamp(12px,1.5vw,20px);
   cursor:zoom-in;
   display:block;
   position:relative;
@@ -706,6 +709,7 @@ section{position:relative}
   width:100%;
   aspect-ratio:3/4;
   object-fit:cover;
+  border-radius:6px;
   transition:opacity .9s var(--silk);
 }
 /* the one hovered stays lit, its neighbours step back a little */
@@ -735,11 +739,6 @@ section{position:relative}
 }
 .rc svg{width:20px;height:20px;display:block}
 .rc:hover,.rc:focus-visible{color:var(--gold);border-color:var(--gold-lo)}
-/* one icon or the other, never both */
-.rc .ic-play{display:none}
-.rc[aria-pressed="true"] .ic-pause{display:none}
-.rc[aria-pressed="true"] .ic-play{display:block}
-
 /* The one cursive word on the page. */
 .script{
   font-family:"Pinyon Script","Libre Caslon Display",cursive;
@@ -1768,7 +1767,6 @@ html.js .step.is-in .n{color:var(--gold)}
 
       <div class="rail-ctl">
         <button class="rc" type="button" data-act="prev" aria-label="Show the previous suits"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 4 L7 12 L15 20" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button>
-        <button class="rc" type="button" data-act="toggle" aria-label="Pause the moving rail" aria-pressed="false"><svg class="ic-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5v14M15 5v14" stroke="currentColor" stroke-width="1.6" fill="none"/></svg><svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5 L19 12 L8 19 Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></button>
         <button class="rc" type="button" data-act="next" aria-label="Show the next suits"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 4 L17 12 L9 20" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button>
       </div>
 
@@ -2436,12 +2434,20 @@ html.js .step.is-in .n{color:var(--gold)}
   var railTrack = rail && rail.querySelector(".rail-track");
 
   if (rail && railTrack) {
-    var playing = !reduced, last = 0, SPEED = 26;   /* px per second */
+    var last = 0, SPEED = 26;             /* px per second */
     /* Position is tracked as a float. Incrementing scrollLeft directly loses
        the fraction every frame — reading it back rounds — so at 26px/s the
        rail crawled a pixel at a time instead of drifting. */
     var pos = rail.scrollLeft;
-    var toggle = document.querySelector('.rc[data-act="toggle"]');
+
+    /* There is no pause button. The rail stops whenever the customer is
+       plainly looking at it rather than watching it go by: a pointer over
+       the band, a finger dragging it, an arrow just pressed, or the
+       full-size viewer open. It picks itself back up afterwards. */
+    var auto = !reduced;
+    var hovering = false;
+    var holdUntil = 0;                    /* set by the arrows and by drags */
+    var lbOpen = false;
 
     var half = function(){ return railTrack.scrollWidth / 2; };
     var wrap = function(){
@@ -2455,7 +2461,7 @@ html.js .step.is-in .n{color:var(--gold)}
       /* the customer dragged or used an arrow — take their position */
       if (Math.abs(rail.scrollLeft - pos) > 2) pos = rail.scrollLeft;
 
-      if (last && playing) {
+      if (last && auto && !hovering && !lbOpen && now > holdUntil) {
         var dt = Math.min((now - last) / 1000, 0.05);
         var h = half();
         pos += SPEED * dt;
@@ -2467,34 +2473,26 @@ html.js .step.is-in .n{color:var(--gold)}
     };
     requestAnimationFrame(frame);
 
-    var setPlaying = function(on){
-      playing = on;
-      if (toggle) {
-        toggle.setAttribute("aria-pressed", on ? "false" : "true");
-        toggle.setAttribute("aria-label", on ? "Pause the moving rail" : "Start the rail moving again");
-      }
-    };
-    setPlaying(playing);
+    rail.addEventListener("pointerenter", function(){ hovering = true; });
+    rail.addEventListener("pointerleave", function(){ hovering = false; });
+    /* a drag holds it still for a moment after the finger lifts */
+    rail.addEventListener("pointerdown", function(){ holdUntil = performance.now() + 2500; });
 
     var step = function(dir){
-      setPlaying(false);
       var item = rail.querySelector(".rail-item");
       var w = item ? item.getBoundingClientRect().width : 300;
+      /* let the smooth scroll finish before the drift takes over again,
+         or the two fight each other over scrollLeft */
+      holdUntil = performance.now() + 1200;
       wrap();
       rail.scrollBy({ left: dir * w, behavior: reduced ? "auto" : "smooth" });
     };
 
     document.querySelectorAll(".rail-ctl .rc").forEach(function(btn){
       btn.addEventListener("click", function(){
-        var act = btn.getAttribute("data-act");
-        if (act === "prev") step(-1);
-        else if (act === "next") step(1);
-        else setPlaying(!playing);
+        step(btn.getAttribute("data-act") === "prev" ? -1 : 1);
       });
     });
-
-    /* A finger on the rail means the customer is looking, not watching. */
-    rail.addEventListener("pointerdown", function(){ setPlaying(false); });
 
     /* ── Full-size viewer ───────────────────────────────────────────────
        The near-lossless copy is fetched only when a suit is chosen.     */
@@ -2519,7 +2517,7 @@ html.js .step.is-in .n{color:var(--gold)}
 
     var open = function(i, from){
       opener = from || null;
-      setPlaying(false);
+      lbOpen = true;
       show(i);
       lb.hidden = false;
       requestAnimationFrame(function(){ lb.classList.add("is-open"); });
@@ -2532,6 +2530,7 @@ html.js .step.is-in .n{color:var(--gold)}
       lb.classList.remove("is-open");
       var done = function(){
         lb.hidden = true;
+        lbOpen = false;
         lbImg.removeAttribute("src");
         document.body.style.overflow = "";
         if (opener) { opener.focus(); opener = null; }

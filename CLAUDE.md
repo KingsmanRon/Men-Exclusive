@@ -176,8 +176,11 @@ diamond doesn't distort. Use it instead of any plain line.
   Wear over 2.6s, and each number lifts from `--gold-lo` to `--gold` as the
   line passes. It reads as a journey rather than three boxes.
 - **The rail** in The Collection drifts at 26px/s, driven by `scrollLeft`
-  rather than a CSS marquee so the arrows, the pause button and a finger
-  swipe all act on the same thing. Position is tracked as a float and
+  rather than a CSS marquee so the arrows and a finger swipe act on the same
+  thing. There is no pause button: it stops on its own whenever the customer
+  is plainly looking rather than watching — pointer over the band, a drag, an
+  arrow just pressed, or the full-size viewer open — and picks itself back
+  up afterwards. Position is tracked as a float and
   assigned — incrementing `scrollLeft` directly loses the fraction every
   frame, and the rail crawls a pixel at a time instead of drifting. It does
   not auto-start under `prefers-reduced-motion`; the controls still work.
@@ -267,7 +270,7 @@ Section anchors: `#house` `#prices` `#occasions` `#visit` `#enquiry`
 4. **The Creed** — 20 min / same day / five days
 5. **The House** — atelier story + dress form
 6. **The Collection** — a continuous rail of the sixteen three-piece suits,
-   pictures butted edge to edge, with pause/prev/next and a full-size viewer
+   spaced and soft-cornered, with prev/next arrows and a full-size viewer
 7. **The Price List** — the signature section
 8. Occasions — 4 tiles
 9. The Process — three steps
