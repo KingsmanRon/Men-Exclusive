@@ -74,9 +74,18 @@ RULES = {
     "store/atelier":             {"out": "store",      "ratio": (2, 3),  "focus": 0.40, "width": 1200},
     "store/signage":             {"out": "store",      "ratio": (4, 3),  "focus": 0.44, "width": 1600},
 
-    "suits":                     {"out": "looks",      "ratio": (3, 4),  "focus": 0.36, "width": 1200},
-    "outerwear":                 {"out": "looks",      "ratio": (3, 4),  "focus": 0.36, "width": 1200},
-    "shirting":                  {"out": "looks",      "ratio": (3, 4),  "focus": 0.34, "width": 1200},
+    # Two variants. The rail shows sixteen of these at once, so the tile is
+    # kept light; the full-size viewer gets a near-lossless copy at the
+    # source's own resolution, because that is where a customer looks for the
+    # weave and the check. The sources are already WhatsApp-compressed, so
+    # the viewer copy is encoded at q93 to avoid adding a second generation
+    # of loss on top of theirs.
+    "suits":                     {"out": "looks",      "ratio": (3, 4),  "focus": 0.36, "width": 760,
+                                  "q": 84, "full": {"width": 1200, "q": 93}},
+    "outerwear":                 {"out": "looks",      "ratio": (3, 4),  "focus": 0.36, "width": 760,
+                                  "q": 84, "full": {"width": 1200, "q": 93}},
+    "shirting":                  {"out": "looks",      "ratio": (3, 4),  "focus": 0.34, "width": 760,
+                                  "q": 84, "full": {"width": 1200, "q": 93}},
 
     "complete-look":             {"out": "looks",      "ratio": (4, 3),  "focus": 0.38, "width": 1600},
 
@@ -251,6 +260,7 @@ def process(src: Path, rel: Path, rule: dict):
             # Uncropped: keep the document's own proportions exactly.
             out_w = min(rule["width"], im.width)
             out_h = int(round(im.height * out_w / im.width))
+        base = im                      # cropped, full resolution
         if (out_w, out_h) != im.size:
             im = im.resize((out_w, out_h), Image.LANCZOS)
 
@@ -261,19 +271,38 @@ def process(src: Path, rel: Path, rule: dict):
         jpg = dest_dir / f"{stem}.jpg"
         webp = dest_dir / f"{stem}.webp"
 
+        jq = rule.get("q", JPEG_QUALITY)
+        wq = min(96, jq + 2)
+
         # 3. Saving without passing exif/icc_profile is what strips GPS,
         #    device model and serial numbers. Do not "helpfully" pass them on.
-        im.save(jpg, "JPEG", quality=JPEG_QUALITY, optimize=True, progressive=True)
-        im.save(webp, "WEBP", quality=WEBP_QUALITY, method=6)
+        im.save(jpg, "JPEG", quality=jq, optimize=True, progressive=True)
+        im.save(webp, "WEBP", quality=wq, method=6)
 
-    return {
-        "jpg": jpg.relative_to(ROOT).as_posix(),
-        "webp": webp.relative_to(ROOT).as_posix(),
-        "w": out_w,
-        "h": out_h,
-        "ratio": tuple(rule["ratio"]) if rule["ratio"] else None,
-        "src": rel.as_posix(),
-    }
+        rec = {
+            "jpg": jpg.relative_to(ROOT).as_posix(),
+            "webp": webp.relative_to(ROOT).as_posix(),
+            "w": out_w,
+            "h": out_h,
+            "ratio": tuple(rule["ratio"]) if rule["ratio"] else None,
+            "src": rel.as_posix(),
+        }
+
+        # Optional second, larger, higher-quality copy for a full-size viewer.
+        full = rule.get("full")
+        if full:
+            fw = min(full["width"], base.width)
+            fh = int(round(fw * out_h / out_w))
+            big = base.resize((fw, fh), Image.LANCZOS) if (fw, fh) != base.size else base
+            fjpg = dest_dir / f"{stem}-full.jpg"
+            fwebp = dest_dir / f"{stem}-full.webp"
+            big.save(fjpg, "JPEG", quality=full["q"], optimize=True, progressive=True)
+            big.save(fwebp, "WEBP", quality=min(96, full["q"] - 2), method=6)
+            rec["full_jpg"] = fjpg.relative_to(ROOT).as_posix()
+            rec["full_webp"] = fwebp.relative_to(ROOT).as_posix()
+            rec["full_w"], rec["full_h"] = fw, fh
+
+    return rec
 
 
 def markup(rec) -> str:
@@ -327,7 +356,8 @@ def main():
         # photograph happens to produce — a logo also emits a favicon, and
         # deleting one behind the script's back must force a rebuild.
         outputs = [v for k, v in (prev or {}).items()
-                   if k in ("jpg", "webp", "ico") and isinstance(v, str)]
+                   if k in ("jpg", "webp", "ico", "full_jpg", "full_webp")
+                   and isinstance(v, str)]
 
         if prev and prev.get("sig") == sig and outputs and all(
             (ROOT / o).exists() for o in outputs

@@ -175,8 +175,12 @@ diamond doesn't distort. Use it instead of any plain line.
 - **The Process** draws a gold hairline left to right across Choose / Fit /
   Wear over 2.6s, and each number lifts from `--gold-lo` to `--gold` as the
   line passes. It reads as a journey rather than three boxes.
-- **The rail** in The Collection runs one slow 150s cycle, pauses on hover,
-  and stops dead under `prefers-reduced-motion`.
+- **The rail** in The Collection drifts at 26px/s, driven by `scrollLeft`
+  rather than a CSS marquee so the arrows, the pause button and a finger
+  swipe all act on the same thing. Position is tracked as a float and
+  assigned — incrementing `scrollLeft` directly loses the fraction every
+  frame, and the rail crawls a pixel at a time instead of drifting. It does
+  not auto-start under `prefers-reduced-motion`; the controls still work.
 
 **Progressive enhancement:** every hidden initial state is scoped under
 `html.js`, a class set by a one-line inline script in the head. If JavaScript
@@ -228,7 +232,12 @@ upright content frames instead), and the House / Complete Look / Visit frames
 were switched to `.frame--portrait` to match. Nothing is cropped destructively.
 
 Images are served through `<picture>` with a WebP source and a JPEG
-fallback — about 30% lighter. Each still carries
+fallback — about 30% lighter. Suits, outerwear and shirting are built at
+**two sizes**: a 760px tile at q84 for the rail, where sixteen load at once,
+and a 1200px copy at q93 for the full-size viewer, fetched only when a
+customer actually opens one. The sources are already WhatsApp-compressed, so
+the viewer copy is encoded high to avoid stacking a second generation of loss
+on theirs. Each still carries
 `onerror="this.style.visibility='hidden'"` inside a `.frame`, so anything
 missing reads as a considered empty plate rather than a broken image icon.
 
@@ -257,7 +266,8 @@ Section anchors: `#house` `#prices` `#occasions` `#visit` `#enquiry`
 3. Hero — masked headline beside the film shown UPRIGHT, WhatsApp CTA
 4. **The Creed** — 20 min / same day / five days
 5. **The House** — atelier story + dress form
-6. **The Collection** — a continuous rail of the sixteen three-piece suits
+6. **The Collection** — a continuous rail of the sixteen three-piece suits,
+   pictures butted edge to edge, with pause/prev/next and a full-size viewer
 7. **The Price List** — the signature section
 8. Occasions — 4 tiles
 9. The Process — three steps
