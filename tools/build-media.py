@@ -80,11 +80,18 @@ RULES = {
     # weave and the check. The sources are already WhatsApp-compressed, so
     # the viewer copy is encoded at q93 to avoid adding a second generation
     # of loss on top of theirs.
-    "suits":                     {"out": "looks",      "ratio": (3, 4),  "focus": 0.36, "width": 760,
+    #
+    # The tile is 900px, not 760. Size it off the DEVICE pixels it lands on,
+    # not the CSS ones: the rail tile is up to 300 CSS px on a phone, and a
+    # phone is a 3x screen, so 760 was being stretched over ~900 real pixels
+    # and softening exactly where the fabric texture lives. 420 CSS px on a
+    # 2x desktop asks for 840, which 760 also missed. 900 covers both, costs
+    # about 40% more per tile, and the rail lazy-loads.
+    "suits":                     {"out": "looks",      "ratio": (3, 4),  "focus": 0.36, "width": 900,
                                   "q": 84, "full": {"width": 1200, "q": 93}},
-    "outerwear":                 {"out": "looks",      "ratio": (3, 4),  "focus": 0.36, "width": 760,
+    "outerwear":                 {"out": "looks",      "ratio": (3, 4),  "focus": 0.36, "width": 900,
                                   "q": 84, "full": {"width": 1200, "q": 93}},
-    "shirting":                  {"out": "looks",      "ratio": (3, 4),  "focus": 0.34, "width": 760,
+    "shirting":                  {"out": "looks",      "ratio": (3, 4),  "focus": 0.34, "width": 900,
                                   "q": 84, "full": {"width": 1200, "q": 93}},
 
     "complete-look":             {"out": "looks",      "ratio": (4, 3),  "focus": 0.38, "width": 1600},
