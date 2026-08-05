@@ -785,6 +785,16 @@ section[id],main[id]{scroll-margin-top:calc(var(--hdr) + 12px)}
 .rail:hover .rail-item:hover img{opacity:1}
 .rail-item:focus-visible{outline:1px solid var(--gold);outline-offset:-3px}
 
+/* On a phone the floor of that clamp is a 250px thumbnail with a third of
+   the screen going spare either side of it. 74vw hands the suit the screen
+   and still leaves the next one peeking in, which is the only thing telling
+   a thumb there is a rail here at all. Capped at 340px so a 430px handset
+   does not outrun the tile: 74vw at 3 device pixels is ~870 on a 393px
+   screen, still inside the 900px source. */
+@media (max-width:640px){
+  .rail-item{width:min(74vw,340px)}
+}
+
 /* ── Rail controls ─────────────────────────────────────────────────────── */
 
 .rail-ctl{
@@ -877,13 +887,76 @@ html.js .lightbox.is-open{opacity:1}
 .lb-btn:hover,.lb-btn:focus-visible{color:var(--gold);border-color:var(--gold-lo)}
 .lb-close{position:absolute;top:clamp(14px,3vw,30px);right:clamp(14px,3vw,30px);z-index:2}
 
+/* ── The viewer on a phone ────────────────────────────────────────────────
+   On a phone the photograph IS the screen, so it is given the whole width:
+   full bleed, caption beneath, close and arrows laid OVER the black rather
+   than stacked into rows that push the suit down to half a screen.
+
+   What was here before set `grid-template-columns:1fr` and then left both
+   arrows to auto-place on `grid-row:2`. PREV took row 2 / column 1, which
+   moved the placement cursor along, so NEXT opened an IMPLICIT second
+   column — and that column took 52px straight out of the 1fr the figure was
+   sitting in. The suit rendered 305px wide on a 393px screen and never
+   reached either edge. The arrows are out of flow now, so nothing competes
+   with the photograph for width.
+
+   This is a sharpness fix as much as a layout one. The sources are 1200px
+   on the long edge; at 305px on a 3x screen the browser was drawing ~915
+   device pixels, and full bleed asks for ~1180 — near enough 1:1 with the
+   file. There is no more resolution to give it without a reshoot.       */
 @media (max-width:640px){
-  .lightbox{grid-template-columns:1fr;grid-template-rows:1fr auto}
-  .lb-figure{grid-row:1}
-  .lb-prev,.lb-next{grid-row:2}
-  .lb-prev{justify-self:start}
-  .lb-next{justify-self:end}
-  .lb-figure img{max-height:66vh}
+  .lightbox{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:0;
+    padding:0;
+  }
+  .lb-figure{width:100%}
+  .lb-figure img{
+    /* width stays auto: max-width does the sizing and the file's own 3:4
+       keeps the height, so nothing is ever squashed to fit. */
+    max-width:100%;
+    /* dvh so the photograph does not resize when the address bar collapses;
+       the vh line above it is the fallback. The reserve clears the close
+       button above and the caption below. */
+    max-height:calc(100vh - 168px);
+    max-height:calc(100dvh - 168px);
+    /* a hairline hard against the screen edge reads as an artefact, not a
+       frame — the top and bottom rules stay and still do that job */
+    border-inline:0;
+  }
+
+  /* Everything except the photograph comes out of the flow. Stacked in
+     rows they cost the suit a third of the screen, and on a short screen
+     the caption and the arrows then landed on each other. */
+  .lb-figure figcaption{
+    position:absolute;
+    left:16px;right:16px;
+    bottom:calc(16px + env(safe-area-inset-bottom));
+    max-width:none;
+    margin:0;
+  }
+  .lb-close{
+    top:calc(14px + env(safe-area-inset-top));
+    right:calc(14px + env(safe-area-inset-right));
+  }
+  /* Mid-edge, the standard place to reach for on a phone, and clear of both
+     the caption and the close button at every height. */
+  .lb-prev,.lb-next{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+  }
+  .lb-prev{left:calc(10px + env(safe-area-inset-left))}
+  .lb-next{right:calc(10px + env(safe-area-inset-right))}
+  /* The arrows lie over the photograph now, so they need a ground of their
+     own to stay readable against a pale suit. Black, never gold. */
+  .lb-btn{
+    background:rgba(8,8,10,.62);
+    backdrop-filter:blur(4px);
+    -webkit-backdrop-filter:blur(4px);
+  }
 }
 
 /* ── Price list — the signature section ──────────────────────────────────

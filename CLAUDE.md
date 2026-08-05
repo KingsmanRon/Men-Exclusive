@@ -268,11 +268,23 @@ were switched to `.frame--portrait` to match. Nothing is cropped destructively.
 
 Images are served through `<picture>` with a WebP source and a JPEG
 fallback — about 30% lighter. Suits, outerwear and shirting are built at
-**two sizes**: a 760px tile at q84 for the rail, where sixteen load at once,
+**two sizes**: a 900px tile at q84 for the rail, where sixteen load at once,
 and a 1200px copy at q93 for the full-size viewer, fetched only when a
 customer actually opens one. The sources are already WhatsApp-compressed, so
 the viewer copy is encoded high to avoid stacking a second generation of loss
-on theirs. Each still carries
+on theirs.
+
+Size the tile off the **device** pixels it lands on, not the CSS ones. It was
+760px, which is right for a 250px tile on a 3× phone and wrong everywhere
+else: the rail tile is 74vw on a phone (~291px at 393px wide, so ~870 real
+pixels) and 420px on a 2× desktop (840). Both were being stretched over a
+760px file, and the softness landed exactly on the marble veining and the
+weave. 900 covers both, costs about 31% more per tile (171 KB → 223 KB WebP),
+and the rail lazy-loads. The ceiling is the source: the client's photographs
+are 1200px on the long edge, so the viewer copy is already at 1:1 and no
+variant can be built larger than that without a reshoot.
+
+Each still carries
 `onerror="this.style.visibility='hidden'"` inside a `.frame`, so anything
 missing reads as a considered empty plate rather than a broken image icon.
 
