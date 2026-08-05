@@ -2655,7 +2655,11 @@ html.js .step.is-in .n{color:var(--gold)}
     rail.addEventListener("pointerenter", function(){ hovering = true; });
     rail.addEventListener("pointerleave", function(){ hovering = false; });
     /* a drag holds it still for a moment after the finger lifts */
-    rail.addEventListener("pointerdown", function(){ holdUntil = performance.now() + 2500; });
+    var dragFrom = null;
+    rail.addEventListener("pointerdown", function(e){
+      holdUntil = performance.now() + 2500;
+      dragFrom = { x: e.clientX, y: e.clientY };
+    });
 
     var step = function(dir){
       var item = rail.querySelector(".rail-item");
@@ -2680,9 +2684,20 @@ html.js .step.is-in .n{color:var(--gold)}
     var lbCap = document.getElementById("lb-cap");
     var opener = null;
 
-    /* only the first copy of the sixteen is addressable */
-    var suits = Array.prototype.slice.call(
-      rail.querySelectorAll('.rail-item:not([aria-hidden="true"])'));
+    /* The track holds the sixteen TWICE. Only the first copy is addressable
+       — the second is aria-hidden and out of the tab order — but both are
+       real buttons showing real suits, and for most of the drift cycle it is
+       a wrap copy sitting under the customer's thumb. Binding the click to
+       the addressable sixteen alone left roughly every other tap doing
+       nothing at all, with no feedback to say why.
+
+       So: every tile is clickable, and a wrap copy resolves to the suit it
+       is a copy OF. `railItems` is DOM order, which is the first sixteen
+       followed by the same sixteen again, so the index is simply modulo. */
+    var railItems = Array.prototype.slice.call(rail.querySelectorAll(".rail-item"));
+    var suits = railItems.filter(function(b){
+      return b.getAttribute("aria-hidden") !== "true";
+    });
     var at = 0;
 
     var show = function(i){
@@ -2712,14 +2727,33 @@ html.js .step.is-in .n{color:var(--gold)}
         lbOpen = false;
         lbImg.removeAttribute("src");
         document.body.style.overflow = "";
-        if (opener) { opener.focus(); opener = null; }
+        /* preventScroll: the tile lives in a band that is drifting anyway,
+           and a plain focus() would yank that band back to wherever the
+           addressable copy happens to be sitting. */
+        if (opener) { opener.focus({ preventScroll: true }); opener = null; }
       };
       if (reduced) done();
       else setTimeout(done, 420);
     };
 
-    suits.forEach(function(b, i){
-      b.addEventListener("click", function(){ open(i, b); });
+    railTrack.addEventListener("click", function(e){
+      var b = e.target.closest ? e.target.closest(".rail-item") : null;
+      if (!b) return;
+      /* A drag that happens to end on a tile is a swipe, not a choice. A
+         touch drag is usually swallowed by the scroll container; a mouse
+         drag is not, and would open a suit nobody asked for.
+
+         `detail` is 0 when the click came from Enter or Space on a focused
+         tile. Without that test a keyboard click carries clientX 0, which
+         reads as an enormous drag away from wherever the last tap landed,
+         and the viewer would never open for a keyboard at all. */
+      if (e.detail !== 0 && dragFrom &&
+          Math.abs(e.clientX - dragFrom.x) + Math.abs(e.clientY - dragFrom.y) > 12) return;
+      var i = railItems.indexOf(b);
+      if (i < 0) return;
+      i = i % suits.length;
+      /* focus returns to the addressable copy — never to an aria-hidden one */
+      open(i, suits[i]);
     });
 
     lb.querySelector(".lb-close").addEventListener("click", close);
